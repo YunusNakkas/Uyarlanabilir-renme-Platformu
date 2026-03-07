@@ -1,0 +1,2 @@
+# Uyarlanabilir-renme-Platformu
+project
