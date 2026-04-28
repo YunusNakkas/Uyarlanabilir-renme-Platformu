@@ -1,0 +1,251 @@
+/* GENEL SIFIRLAMA VE GÖVDE */
+*{box-sizing:border-box;margin:0;padding:0;}
+
+body{
+  background:#f5f5f3;
+  display:flex;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden; /* Dış çerçevede istenmeyen kaydırma çubuklarını engeller */
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+
+:root{
+  --color-background-primary:#ffffff;
+  --color-background-secondary:#f5f5f3;
+  --color-background-success:#e1f5ee;
+  --color-text-primary:#1a1a18;
+  --color-text-secondary:#5f5e5a;
+  --color-text-tertiary:#888780;
+  --color-text-success:#0f6e56;
+  --color-border-tertiary:rgba(0,0,0,0.12);
+  --color-border-secondary:rgba(0,0,0,0.22);
+  --color-border-success:#9fe1cb;
+}
+
+/* ANA ÇERÇEVE (TAM EKRAN) */
+.shell{
+  display:flex;
+  width: 100%;
+  height: 100%;
+  background:#fff;
+  /* Tam ekran olduğu için gölge, kenarlık ve ovalliğe gerek kalmadı */
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow:hidden;
+}
+
+/* SOL MENÜ (SİDEBAR) */
+.sidebar{width:200px;min-width:200px;border-right:0.5px solid rgba(0,0,0,0.1);background:#f5f5f3;display:flex;flex-direction:column;padding:16px 12px;gap:4px;}
+.logo{font-size:15px;font-weight:600;color:#1a1a18;margin-bottom:14px;padding-bottom:14px;border-bottom:0.5px solid rgba(0,0,0,0.1);display:flex;align-items:center;gap:8px; flex-shrink:0;}
+.logo-dot{width:22px;height:22px;border-radius:6px;background:#1D9E75;flex-shrink:0;}
+.nlabel{font-size:10px;color:#888780;letter-spacing:.06em;text-transform:uppercase;margin:10px 0 4px 4px; flex-shrink:0;}
+.nitem{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;font-size:13px;color:#5f5e5a;cursor:pointer; flex-shrink:0;}
+.nitem.active{background:#fff;border:0.5px solid rgba(0,0,0,0.12);color:#1a1a18;font-weight:500;}
+.ndot{width:9px;height:9px;border-radius:3px;flex-shrink:0;}
+.sfooter{margin-top:auto;border-top:0.5px solid rgba(0,0,0,0.1);padding-top:12px;display:flex;align-items:center;gap:9px; flex-shrink:0;}
+.av{width:30px;height:30px;border-radius:50%;background:#AFA9EC;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:#3C3489;flex-shrink:0;}
+
+/* SAĞ ANA ALAN */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.tbar{height:50px;min-height:50px;border-bottom:0.5px solid rgba(0,0,0,0.1);display:flex;align-items:center;padding:0 18px;gap:12px; flex-shrink:0;}
+.content{display:flex;flex:1;overflow:hidden;}
+
+/* SOL PANEL (NOT GİRİŞ ALANI) */
+.lpanel{
+  width:320px; 
+  min-width:320px;
+  border-right:0.5px solid rgba(0,0,0,0.1);
+  display:flex;
+  flex-direction:column;
+  padding:16px;
+  gap:12px;
+  overflow-y:auto; /* Kaydırma çubuğu aktif */
+  padding-bottom: 30px; /* Alt kısımdan kesilmeyi önler */
+}
+.slabel{font-size:11px;color:#888780;margin-bottom:4px; flex-shrink:0;}
+.tabs{display:flex;gap:5px; flex-shrink:0;}
+.tab{padding:4px 11px;border-radius:20px;font-size:12px;border:0.5px solid rgba(0,0,0,0.12);color:#5f5e5a;background:transparent;}
+.tab.sel{font-weight:500;background:#E1F5EE;color:#0F6E56;border-color:#9FE1CB;}
+
+/* KARTLARIN SIKIŞMASINI ÖNLEYEN KOD (flex-shrink: 0) */
+.gcard, .dcard, .acard, .sgrid {
+  flex-shrink: 0; 
+}
+
+.gcard{border:0.5px solid rgba(0,0,0,0.12);border-radius:12px;overflow:hidden;}
+.gchead{padding:9px 12px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:7px;border-bottom:0.5px solid rgba(0,0,0,0.08);}
+.grow{display:flex;align-items:center;padding:8px 12px;gap:9px;border-bottom:0.5px solid rgba(0,0,0,0.07);}
+.grow:last-child{border-bottom:none;}
+.glabel{font-size:12px;color:#5f5e5a;flex:1;}
+.ginput{width:56px;border:1px solid rgba(0,0,0,0.15);border-radius:8px;padding:6px 6px;font-size:13px;text-align:center;color:#1a1a18;background:#fff;transition:0.2s;}
+.ginput:focus{outline:none; border-color:#1D9E75; box-shadow:0 0 0 2px rgba(29,158,117,0.2);}
+.gscore{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;transition:0.3s;}
+
+.sh{background:#E1F5EE;color:#0F6E56;}
+.sm{background:#FAEEDA;color:#854F0B;}
+.sl{background:#FCEBEB;color:#A32D2D;}
+
+.abtn{width:100%;padding:12px;border-radius:8px;background:#1D9E75;color:white;border:none;font-size:14px;font-weight:600;cursor:pointer;transition:0.2s; flex-shrink:0; margin-top:10px;}
+.abtn:hover{background:#158260; transform:translateY(-1px);}
+.abtn:disabled{background:#888780;cursor:not-allowed; transform:none;}
+
+/* SAĞ PANEL (AI TAVSİYE ALANI) */
+.rpanel{flex:1;display:flex;flex-direction:column;overflow:hidden; background:#fafafa;}
+.rarea{
+  flex:1;
+  overflow-y:auto; /* Kaydırma çubuğu aktif */
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  padding-bottom: 40px; /* En alttaki kartın kesilmesini önler */
+  transition: opacity 0.3s;
+}
+
+.sgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+.scard{background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:10px;padding:12px 14px; box-shadow:0 2px 8px rgba(0,0,0,0.02);}
+.sc-lbl{font-size:11px;font-weight:500;color:#888780;margin-bottom:4px;}
+.sc-val{font-size:24px;font-weight:600;color:#1a1a18;}
+.sc-sub{font-size:11px;color:#888780;margin-top:4px;}
+.pbar{height:4px;border-radius:2px;background:rgba(0,0,0,0.08);margin-top:8px;overflow:hidden;}
+.pfill{height:100%;border-radius:2px;transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);}
+
+.acard{border:1px solid rgba(0,0,0,0.12);border-radius:12px;overflow:hidden; background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.03);}
+.ahead{padding:10px 16px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(0,0,0,0.08);}
+.abody{padding:14px 16px;display:flex;flex-direction:column;gap:12px;}
+.aitem{display:flex;gap:10px;align-items:flex-start;}
+.adot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:7px;}
+.atext{font-size:13px;color:#2c3e50;line-height:1.6;}
+
+.dcard{border:1px solid rgba(0,0,0,0.12);border-radius:12px;overflow:hidden; background:#fff;}
+.drow{display:flex;align-items:center;padding:12px 16px;gap:12px;border-bottom:1px solid rgba(0,0,0,0.06);}
+.drow:last-child{border-bottom:none;}
+.dname{font-size:13px;font-weight:600;color:#1a1a18;width:80px;}
+.dbar-bg{flex:1;height:8px;border-radius:4px;background:rgba(0,0,0,0.06);overflow:hidden;}
+.dbar-fill{height:100%;border-radius:4px;transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);}
+.dscore{font-size:14px;font-weight:600;width:36px;text-align:right;}
+.dtrend{font-size:12px;width:44px;text-align:right; font-weight:500;}
+
+/* Scrollbar Tasarımı (Daha şık bir kaydırma çubuğu) */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.25); }
+
+/* Modal (Popup) Tasarımı */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center; justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-box {
+  background: #fff;
+  border-radius: 14px;
+  width: 90%; max-width: 500px;
+  max-height: 80vh;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  display: flex; flex-direction: column;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.modal-overlay.show .modal-box {
+  transform: translateY(0);
+}
+
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  display: flex; align-items: center; justify-content: space-between;
+  background: #fdfdfd;
+}
+
+.modal-close-btn {
+  background: transparent; border: none;
+  font-size: 26px; color: #888780;
+  cursor: pointer; transition: color 0.2s;
+  line-height: 0.8;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.modal-close-btn:hover { color: #1a1a18; }
+
+.modal-body {
+  padding: 16px 20px;
+  overflow-y: auto;
+}
+
+/* ── MOBİL UYUMLULUK ────────────────────────────────── */
+@media (max-width: 768px) {
+  body { overflow: auto; height: auto; min-height: 100vh; }
+
+  .shell { flex-direction: column; height: auto; min-height: 100vh; overflow: visible; }
+
+  /* Sidebar → üst bar */
+  .sidebar {
+    width: 100%; min-width: unset;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 14px;
+    border-right: none;
+    border-bottom: 0.5px solid rgba(0,0,0,0.1);
+    gap: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  .logo { margin-bottom: 0; padding-bottom: 0; border-bottom: none; font-size: 14px; margin-right: 12px; flex-shrink: 0; }
+  .nlabel { display: none; }
+  .nitem { padding: 5px 8px; font-size: 12px; flex-shrink: 0; }
+  .sfooter { margin-top: 0; border-top: none; padding-top: 0; margin-left: auto; flex-shrink: 0; }
+
+  /* Ana içerik dikey */
+  .main { overflow: visible; }
+  .tbar { height: auto; min-height: 44px; padding: 8px 14px; flex-wrap: wrap; gap: 8px; }
+  .content { flex-direction: column; overflow: visible; height: auto; }
+
+  /* Sol panel (not girişi) tam genişlik */
+  .lpanel {
+    width: 100%; min-width: unset;
+    border-right: none;
+    border-bottom: 0.5px solid rgba(0,0,0,0.1);
+    padding: 12px;
+    overflow-y: visible;
+    max-height: none;
+  }
+
+  /* Sağ panel (AI sonuçları) tam genişlik */
+  .rpanel { overflow: visible; }
+  .rarea { overflow-y: visible; padding: 14px; padding-bottom: 40px; }
+
+  /* Grid 1 sütuna düş */
+  .sgrid { grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  /* Modal tam ekran */
+  .modal-box { width: 96%; max-height: 90vh; }
+
+  /* Butonlar tam genişlik */
+  .abtn { font-size: 15px; padding: 14px; }
+
+  /* Skor kutusu biraz küçülsün */
+  .ginput { width: 50px; }
+}
+

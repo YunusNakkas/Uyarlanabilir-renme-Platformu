@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EduAI - Giriş</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231D9E75'/><text x='16' y='23' text-anchor='middle' font-family='system-ui,sans-serif' font-size='18' font-weight='700' fill='white'>E</text></svg>"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  background:#f5f5f3;
+  display:flex;align-items:center;justify-content:center;
+  min-height:100vh;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+.card{
+  background:#fff;
+  border:0.5px solid rgba(0,0,0,0.12);
+  border-radius:16px;
+  box-shadow:0 8px 40px rgba(0,0,0,0.08);
+  padding:40px 44px;
+  width:100%;max-width:400px;
+}
+.logo{
+  display:flex;align-items:center;gap:10px;
+  font-size:18px;font-weight:700;color:#1a1a18;
+  margin-bottom:32px;
+}
+.logo-dot{width:24px;height:24px;border-radius:7px;background:#1D9E75;flex-shrink:0;}
+.title{font-size:22px;font-weight:600;color:#1a1a18;margin-bottom:22px;}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.field label{font-size:12px;font-weight:500;color:#5f5e5a;}
+.field input{
+  border:1px solid rgba(0,0,0,0.18);border-radius:8px;
+  padding:10px 13px;font-size:14px;color:#1a1a18;outline:none;
+  transition:border-color 0.15s;
+}
+.field input:focus{border-color:#1D9E75;}
+.error{font-size:12px;color:#d94f4f;min-height:18px;margin-bottom:8px;}
+.btn{
+  width:100%;background:#1D9E75;color:#fff;
+  border:none;border-radius:8px;padding:12px;
+  font-size:14px;font-weight:600;cursor:pointer;
+  transition:background 0.15s;margin-top:2px;
+}
+.btn:hover{background:#178a63;}
+.btn:disabled{background:#a0c8bb;cursor:not-allowed;}
+.switch{font-size:12px;color:#888780;text-align:center;margin-top:18px;}
+.switch a{color:#1D9E75;text-decoration:none;font-weight:500;}
+.switch a:hover{text-decoration:underline;}
+.divider{height:1px;background:rgba(0,0,0,0.08);margin:20px 0;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo"><div class="logo-dot"></div>EduAI</div>
+
+  <!-- Giriş Formu -->
+  <div id="panelLogin">
+    <h2 class="title">Giriş Yap</h2>
+    <div class="field">
+      <label>E-posta</label>
+      <input id="loginEmail" type="email" placeholder="ornek@mail.com" autocomplete="email"/>
+    </div>
+    <div class="field">
+      <label>Şifre</label>
+      <input id="loginPassword" type="password" placeholder="••••••" autocomplete="current-password"/>
+    </div>
+    <div id="loginError" class="error"></div>
+    <button id="loginBtn" class="btn">Giriş Yap</button>
+    <p class="switch" style="margin-top:12px;">
+      <a href="#" id="goForgot" style="color:#888780;font-weight:400;">Şifremi unuttum</a>
+    </p>
+    <div class="divider"></div>
+    <p class="switch">Hesabın yok mu? <a href="#" id="goRegister">Kayıt Ol</a></p>
+  </div>
+
+  <!-- Kayıt Formu -->
+  <div id="panelRegister" style="display:none;">
+    <h2 class="title">Kayıt Ol</h2>
+    <div class="field">
+      <label>E-posta</label>
+      <input id="regEmail" type="email" placeholder="ornek@mail.com" autocomplete="email"/>
+    </div>
+    <div class="field">
+      <label>Şifre</label>
+      <input id="regPassword" type="password" placeholder="En az 6 karakter" autocomplete="new-password"/>
+    </div>
+    <div id="regError" class="error"></div>
+    <button id="registerBtn" class="btn">Kayıt Ol</button>
+    <p class="switch">Zaten hesabın var mı? <a href="#" id="goLogin">Giriş Yap</a></p>
+  </div>
+
+  <!-- Şifremi Unuttum Formu -->
+  <div id="panelForgot" style="display:none;">
+    <h2 class="title">Şifremi Unuttum</h2>
+    <p style="font-size:13px;color:#888780;margin-bottom:20px;">Kayıtlı e-posta adresinizi girin, sıfırlama bağlantısı gönderelim.</p>
+    <div class="field">
+      <label>E-posta</label>
+      <input id="forgotEmail" type="email" placeholder="ornek@mail.com" autocomplete="email"/>
+    </div>
+    <div id="forgotMsg" class="error"></div>
+    <a id="forgotDemoLink" href="#" style="display:none;font-size:11px;color:#1D9E75;word-break:break-all;margin-bottom:10px;display:none;"></a>
+    <button id="forgotBtn" class="btn">Sıfırlama Bağlantısı Gönder</button>
+    <p class="switch" style="margin-top:16px;"><a href="#" id="goLoginFromForgot">← Giriş sayfasına dön</a></p>
+  </div>
+</div>
+
+<script>
+  const API_BASE = window.location.port === "8000" || window.location.port === "" ? "" : "http://127.0.0.1:8000";
+
+  function showPanel(id) {
+    ["panelLogin","panelRegister","panelForgot"].forEach(p =>
+      document.getElementById(p).style.display = p === id ? "block" : "none"
+    );
+  }
+
+  document.getElementById("goRegister").addEventListener("click", e => {
+    e.preventDefault(); showPanel("panelRegister");
+    document.getElementById("regError").innerText = "";
+  });
+
+  document.getElementById("goLogin").addEventListener("click", e => {
+    e.preventDefault(); showPanel("panelLogin");
+    document.getElementById("loginError").innerText = "";
+  });
+
+  document.getElementById("goForgot").addEventListener("click", e => {
+    e.preventDefault(); showPanel("panelForgot");
+    document.getElementById("forgotMsg").innerText = "";
+    document.getElementById("forgotMsg").className = "error";
+  });
+
+  document.getElementById("goLoginFromForgot").addEventListener("click", e => {
+    e.preventDefault(); showPanel("panelLogin");
+    document.getElementById("loginError").innerText = "";
+  });
+
+  document.getElementById("loginBtn").addEventListener("click", async () => {
+    const email    = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    const errEl    = document.getElementById("loginError");
+    const btn      = document.getElementById("loginBtn");
+    errEl.innerText = "";
+    if (!email || !password) { errEl.innerText = "E-posta ve şifre zorunlu."; return; }
+    btn.disabled = true; btn.innerText = "Giriş yapılıyor...";
+    try {
+      const res  = await fetch(`${API_BASE}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ username: email, password })
+      });
+      const data = await res.json();
+      if (!res.ok) { errEl.innerText = data.detail || "Giriş başarısız."; return; }
+      sessionStorage.setItem("_eduai_t", data.access_token);
+      window.location.replace("/");
+    } catch { errEl.innerText = "Sunucuya bağlanılamadı."; }
+    finally { btn.disabled = false; btn.innerText = "Giriş Yap"; }
+  });
+
+  document.getElementById("registerBtn").addEventListener("click", async () => {
+    const email    = document.getElementById("regEmail").value.trim();
+    const password = document.getElementById("regPassword").value;
+    const errEl    = document.getElementById("regError");
+    const btn      = document.getElementById("registerBtn");
+    errEl.innerText = "";
+    if (!email || !password) { errEl.innerText = "E-posta ve şifre zorunlu."; return; }
+    btn.disabled = true; btn.innerText = "Kaydediliyor...";
+    try {
+      const res  = await fetch(`${API_BASE}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await res.json();
+      if (!res.ok) { errEl.innerText = data.detail || "Kayıt başarısız."; return; }
+      sessionStorage.setItem("_eduai_t", data.access_token);
+      window.location.replace("/");
+    } catch { errEl.innerText = "Sunucuya bağlanılamadı."; }
+    finally { btn.disabled = false; btn.innerText = "Kayıt Ol"; }
+  });
+
+  document.getElementById("forgotBtn").addEventListener("click", async () => {
+    const email = document.getElementById("forgotEmail").value.trim();
+    const msgEl = document.getElementById("forgotMsg");
+    const btn   = document.getElementById("forgotBtn");
+    msgEl.className = "error"; msgEl.innerText = ""; msgEl.style.color = "";
+    const demoEl = document.getElementById("forgotDemoLink");
+    demoEl.style.display = "none";
+    if (!email) { msgEl.innerText = "E-posta adresinizi girin."; return; }
+    btn.disabled = true; btn.innerText = "Gönderiliyor...";
+    try {
+      const res  = await fetch(`${API_BASE}/auth/forgot-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+      if (!res.ok) { msgEl.innerText = data.detail || "Bir hata oluştu."; return; }
+      msgEl.style.color = "#1D9E75";
+      if (data.demo && data.reset_url) {
+        msgEl.innerText = "SMTP ayarlı değil. Aşağıdaki bağlantıyı kullan:";
+        demoEl.href = data.reset_url;
+        demoEl.innerText = data.reset_url;
+        demoEl.style.display = "block";
+      } else {
+        msgEl.innerText = data.message || "Sıfırlama bağlantısı gönderildi.";
+      }
+      btn.innerText = "Gönderildi ✓";
+    } catch { msgEl.style.color = ""; msgEl.innerText = "Sunucuya bağlanılamadı."; btn.disabled = false; btn.innerText = "Sıfırlama Bağlantısı Gönder"; }
+  });
+
+  // Enter tuşu
+  ["loginEmail","loginPassword"].forEach(id =>
+    document.getElementById(id).addEventListener("keydown", e => { if(e.key==="Enter") document.getElementById("loginBtn").click(); })
+  );
+  ["regEmail","regPassword"].forEach(id =>
+    document.getElementById(id).addEventListener("keydown", e => { if(e.key==="Enter") document.getElementById("registerBtn").click(); })
+  );
+  document.getElementById("forgotEmail").addEventListener("keydown", e => {
+    if (e.key === "Enter") document.getElementById("forgotBtn").click();
+  });
+</script>
+</body>
+</html>
