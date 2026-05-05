@@ -1,4 +1,4 @@
-# 🧠 Makine Öğrenimi ve Analitik Sistem Tasarımı
+#  Makine Öğrenimi ve Analitik Sistem Tasarımı
 
 Bu doküman, **Uyarlanabilir Öğrenme Platformu** projesinin zeka modülü, veri analitiği ve sistem iyileştirme süreçlerini detaylandırmaktadır.
 
