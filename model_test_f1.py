@@ -1,4 +1,5 @@
-"""
+"""import matplotlib.pyplot as plt
+import seaborn as sns
 🧪 F1 SKORU TEST SCRİPTİ (Mevcut V4 Modeli İçin)
 =================================================
 Çalıştığımız mevcut modeli (tavsiye_modeli_v4.joblib)
@@ -75,6 +76,21 @@ def test_et():
     print(header)
     for i, row in zip(labels, cm):
         print(f"  Gerçek {i} | " + "    ".join(map(str, row)))
+    for i, row in zip(labels, cm):
+        print(f" Gerçek {i} | " + " ".join(map(str, row)))
+
+    # --- BURAYA YAPIŞTIR (Hizaya Dikkat!) ---
+    plt.figure(figsize=(10, 7))
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
+                xticklabels=target_names, yticklabels=target_names)
+    plt.title('Model Tahmin Başarısı - Karmaşıklık Matrisi')
+    plt.xlabel('Tahmin Edilen Seviye')
+    plt.ylabel('Gerçek Seviye')
+    plt.savefig('model_performans_grafigi.png') 
+    print("\n📊 Performans grafiği 'model_performans_grafigi.png' olarak kaydedildi.")
+    # ----------------------------------------
+
+    print("\n✅ Test başarıyla tamamlandı.\n") # Bu satır en sonda kalabilir  
     print("\n✅ Test başarıyla tamamlandı.\n")
 
 if __name__ == "__main__":
