@@ -10,20 +10,19 @@ if DATABASE_URL:
     engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 else:
     DB_PATH = Path(__file__).parent.parent / "eduai.db"
-    engine = create_engine(f"sqlite:///{DB_PATH}", connect_args={"check_same_thread": False})
+    engine = create_engine(
+        f"sqlite:///{DB_PATH}",
+        connect_args={"check_same_thread": False}
+    )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 
 def get_db():
+    """FastAPI dependency: veritabanı oturumu sağlar."""
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
-
-
-def init_db():
-    from backend.models import Analysis, Goal, User  # noqa: F401
-    Base.metadata.create_all(bind=engine)
