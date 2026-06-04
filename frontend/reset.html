@@ -61,7 +61,12 @@ body{
 
   <div id="panelForm">
     <h2 class="title">Yeni Şifre Belirle</h2>
-    <p class="subtitle">Hesabınız için yeni bir şifre oluşturun.</p>
+    <p class="subtitle">Önce e-postana gelen kodu doğrula, sonra yeni şifreni belirle.</p>
+    <button id="sendCodeBtn" class="btn" style="background:#fff;color:#1D9E75;border:1px solid #9fe1cb;margin-bottom:16px;">📧 E-postama doğrulama kodu gönder</button>
+    <div class="field">
+      <label>Doğrulama Kodu</label>
+      <input id="resetCode" type="text" inputmode="numeric" maxlength="6" placeholder="E-postana gelen 6 haneli kod" style="letter-spacing:3px;"/>
+    </div>
     <div class="field">
       <label>Yeni Şifre</label>
       <input id="newPassword" type="password" placeholder="En az 6 karakter" autocomplete="new-password"/>
@@ -95,14 +100,39 @@ body{
 <script>
   const API_BASE = window.location.port === "8000" || window.location.port === "" ? "" : "http://127.0.0.1:8000";
   const params = new URLSearchParams(window.location.search);
-  const token = params.get("token");
+  const email = params.get("email");
 
-  if (!token) {
+  if (!email) {
     document.getElementById("panelForm").style.display = "none";
     document.getElementById("panelInvalid").style.display = "block";
   }
 
+  document.getElementById("sendCodeBtn").addEventListener("click", async () => {
+    const msgEl = document.getElementById("msg");
+    const btn   = document.getElementById("sendCodeBtn");
+    msgEl.className = "msg error";
+    msgEl.innerText = "";
+    btn.disabled = true; btn.innerText = "Gönderiliyor...";
+    try {
+      const res = await fetch(`${API_BASE}/auth/request-reset-code`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) { msgEl.innerText = data.detail || "Kod gönderilemedi."; return; }
+      msgEl.className = "msg success";
+      msgEl.innerText = "Kod e-postana gönderildi (5 dk geçerli).";
+      document.getElementById("resetCode").focus();
+    } catch {
+      msgEl.innerText = "Sunucuya bağlanılamadı.";
+    } finally {
+      btn.disabled = false; btn.innerText = "📧 E-postama doğrulama kodu gönder";
+    }
+  });
+
   document.getElementById("resetBtn").addEventListener("click", async () => {
+    const code    = document.getElementById("resetCode").value.trim();
     const newPass = document.getElementById("newPassword").value;
     const confirm = document.getElementById("confirmPassword").value;
     const msgEl   = document.getElementById("msg");
@@ -111,21 +141,22 @@ body{
     msgEl.className = "msg error";
     msgEl.innerText = "";
 
+    if (!code)                { msgEl.innerText = "Önce e-postana gelen kodu girin."; return; }
     if (!newPass || !confirm) { msgEl.innerText = "Tüm alanları doldurun."; return; }
     if (newPass.length < 6)   { msgEl.innerText = "Şifre en az 6 karakter olmalı."; return; }
     if (newPass !== confirm)  { msgEl.innerText = "Şifreler eşleşmiyor."; return; }
 
     btn.disabled = true; btn.innerText = "Güncelleniyor...";
     try {
-      const res  = await fetch(`${API_BASE}/auth/reset-password`, {
+      const res  = await fetch(`${API_BASE}/auth/reset-password-direct`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, new_password: newPass })
+        body: JSON.stringify({ email, new_password: newPass, code })
       });
       const data = await res.json();
       if (!res.ok) {
         msgEl.innerText = data.detail || "Bir hata oluştu.";
-        if (res.status === 400 && data.detail && data.detail.includes("Geçersiz")) {
+        if (res.status === 400 && data.detail && data.detail.includes("bulunamadı")) {
           document.getElementById("panelForm").style.display = "none";
           document.getElementById("panelInvalid").style.display = "block";
         }

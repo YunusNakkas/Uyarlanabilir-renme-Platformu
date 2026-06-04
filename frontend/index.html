@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>EduAI - Yapay Zeka Koçu</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231D9E75'/><text x='16' y='23' text-anchor='middle' font-family='system-ui,sans-serif' font-size='18' font-weight='700' fill='white'>E</text></svg>"/>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=3">
 </head >
 <body>
 <div id="loadingScreen" style="position:fixed;inset:0;background:#f5f5f3;display:flex;align-items:center;justify-content:center;z-index:9999;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#888780;font-size:14px;gap:10px;">
@@ -41,7 +41,6 @@
 <div class="main">
   <div class="tbar">
     <span style="font-size:15px;font-weight:600;color:#1a1a18;flex:1;">Sınav Notu Analizi & Tavsiye</span>
-    <span style="font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;background:#e1f5ee;color:#0f6e56;border:1px solid #9fe1cb;">Yapay Zeka Aktif</span>
   </div>
 
   <div class="content">
@@ -106,29 +105,16 @@
         </div>
         <button id="pathBtn" style="display:none; padding:8px 16px; background:#ede9fe; color:#6d28d9; border:1px solid #c4b5fd; border-radius:8px; font-weight:600; cursor:pointer; font-size:12px; transition:0.2s;">📚 Öğrenme Yolum</button>
         <button id="pdfBtn" style="display:none; padding:8px 16px; background:#e1f5ee; color:#0f6e56; border:1px solid #9fe1cb; border-radius:8px; font-weight:600; cursor:pointer; font-size:12px; transition:0.2s;">📄 PDF İndir</button>
+        <button id="mailBtn" style="display:none; padding:8px 16px; background:#e6f1fb; color:#185fa5; border:1px solid #aacdf3; border-radius:8px; font-weight:600; cursor:pointer; font-size:12px; transition:0.2s;">📧 Raporu Mail At</button>
       </div>
 
       <div id="ai-sonuc-alani" class="rarea" style="opacity: 0.5; pointer-events: none;">
-        
-        <div id="ui-ilerleme-sgrid" class="sgrid">
-          <div class="scard">
-            <div class="sc-lbl">Genel ortalama</div>
-            <div id="ui-genel-ort" class="sc-val" style="color:#1D9E75;">--</div>
-            <div class="sc-sub">3 ders ortalaması</div>
-          </div>
-          <div class="scard">
-            <div class="sc-lbl">En güçlü</div>
-            <div id="ui-guclu-isim" class="sc-val" style="color:#0F6E56;">--</div>
-            <div id="ui-guclu-alt" class="sc-sub">Ort. -- / 100</div>
-            <div class="pbar"><div id="ui-guclu-bar" class="pfill" style="width:0%;background:#1D9E75;"></div></div>
-          </div>
-          <div class="scard">
-            <div class="sc-lbl">Gelişmeli</div>
-            <div id="ui-zayif-isim" class="sc-val" style="color:#185FA5;">--</div>
-            <div id="ui-zayif-alt" class="sc-sub">Ort. -- / 100</div>
-            <div class="pbar"><div id="ui-zayif-bar" class="pfill" style="width:0%;background:#378ADD;"></div></div>
-          </div>
-        </div>
+
+        <!-- React Island mount noktası (react-island.jsx) — kayan alanın içinde -->
+        <div id="react-ozet-root"></div>
+
+        <!-- Fark analizi: not-seviyesi vs alışkanlık-seviyesi (JS doldurur) -->
+        <div id="ui-gap-card" style="display:none;"></div>
 
         <div id="ui-ilerleme-dcard" class="dcard">
           <div class="ahead" style="background:#f5f5f3;"><span style="color:#5f5e5a;">Ders Performans Çubukları</span></div>
@@ -271,6 +257,8 @@
       </div>
       <input id="pwdCurrent" type="password" placeholder="Mevcut şifre" style="width:100%;border:1px solid rgba(0,0,0,0.15);border-radius:8px;padding:8px 11px;font-size:13px;outline:none;margin-bottom:8px;"/>
       <input id="pwdNew" type="password" placeholder="Yeni şifre (en az 6 karakter)" style="width:100%;border:1px solid rgba(0,0,0,0.15);border-radius:8px;padding:8px 11px;font-size:13px;outline:none;margin-bottom:8px;"/>
+      <button id="pwdSendCodeBtn" style="width:100%;background:#fff;color:#6D28D9;border:1px solid #c4b5fd;border-radius:8px;padding:9px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:8px;">📧 E-postama doğrulama kodu gönder</button>
+      <input id="pwdCode" type="text" inputmode="numeric" maxlength="6" placeholder="E-postana gelen 6 haneli kod" style="width:100%;border:1px solid rgba(0,0,0,0.15);border-radius:8px;padding:8px 11px;font-size:13px;outline:none;margin-bottom:8px;letter-spacing:3px;"/>
       <div id="pwdError" style="font-size:12px;color:#d94f4f;min-height:16px;margin-bottom:6px;"></div>
       <button id="pwdSaveBtn" style="width:100%;background:#8B5CF6;color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;">Şifreyi Güncelle</button>
     </div>
@@ -278,6 +266,7 @@
     <!-- Çıkış -->
     <div style="border-top:1px solid rgba(0,0,0,0.08);padding-top:20px;">
       <button id="logoutBtnPanel" style="width:100%;background:#fff;color:#d94f4f;border:1px solid #f7c1c1;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;">Çıkış Yap</button>
+      <button id="deleteAccountBtn" style="width:100%;background:#d94f4f;color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:10px;">Hesabımı Sil</button>
     </div>
 
   </div>
@@ -301,6 +290,11 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script src="js/app.js?v=11"></script>
+<!-- React (CDN, build adımı yok) — Akademik Özet island için -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+<script type="text/babel" src="js/react-island.jsx?v=1"></script>
+<script src="js/app.js?v=14"></script>
 </body>
 </html>
