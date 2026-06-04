@@ -35,15 +35,15 @@ function ProgressRing({ value, color }) {
   const offset = c - (pct / 100) * c;
   return (
     <svg width="110" height="110" viewBox="0 0 110 110" style={{ flexShrink: 0 }}>
-      <circle cx="55" cy="55" r={r} fill="none" stroke="#eceae6" strokeWidth="9" />
+      <circle cx="55" cy="55" r={r} fill="none" stroke="var(--color-border-tertiary)" strokeWidth="9" />
       <circle
         cx="55" cy="55" r={r} fill="none" stroke={color} strokeWidth="9"
         strokeLinecap="round" strokeDasharray={c} strokeDashoffset={offset}
         transform="rotate(-90 55 55)"
         style={{ transition: "stroke-dashoffset .7s cubic-bezier(.4,0,.2,1)" }}
       />
-      <text x="55" y="52" textAnchor="middle" fontSize="26" fontWeight="700" fill="#1a1a18">{value}</text>
-      <text x="55" y="70" textAnchor="middle" fontSize="10" fill="#888780">/ 100</text>
+      <text x="55" y="52" textAnchor="middle" fontSize="26" fontWeight="700" fill="var(--color-text-primary)">{value}</text>
+      <text x="55" y="70" textAnchor="middle" fontSize="10" fill="var(--color-text-tertiary)">/ 100</text>
     </svg>
   );
 }
@@ -51,12 +51,12 @@ function ProgressRing({ value, color }) {
 function Chip({ label, isim, ort, color }) {
   return (
     <div style={{
-      flex: 1, background: "#fff", border: "1px solid rgba(0,0,0,0.08)",
+      flex: 1, background: "var(--color-background-primary)", border: "1px solid var(--color-border-tertiary)",
       borderRadius: 10, padding: "10px 12px", display: "flex", flexDirection: "column", gap: 2
     }}>
-      <span style={{ fontSize: 10, fontWeight: 600, color: "#888780", textTransform: "uppercase", letterSpacing: ".04em" }}>{label}</span>
+      <span style={{ fontSize: 10, fontWeight: 600, color: "var(--color-text-tertiary)", textTransform: "uppercase", letterSpacing: ".04em" }}>{label}</span>
       <span style={{ fontSize: 16, fontWeight: 700, color }}>{isim}</span>
-      <span style={{ fontSize: 11, color: "#888780" }}>Ort. {ort} / 100</span>
+      <span style={{ fontSize: 11, color: "var(--color-text-tertiary)" }}>Ort. {ort} / 100</span>
     </div>
   );
 }
@@ -77,15 +77,15 @@ function OzetKart() {
   return (
     <div style={{
       padding: 16, borderRadius: 14,
-      background: "linear-gradient(135deg,#f6fbf9 0%,#eef6f2 100%)",
-      border: "1px solid #d6ece2"
+      background: "var(--ozet-bg)",
+      border: "1px solid var(--ozet-border)"
     }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-        <span style={{ fontSize: 13, fontWeight: 700, color: "#0F6E56" }}>Akademik Özet</span>
+        <span style={{ fontSize: 13, fontWeight: 700, color: "var(--color-text-success)" }}>Akademik Özet</span>
       </div>
 
       {!active ? (
-        <div style={{ fontSize: 13, color: "#888780", padding: "18px 4px" }}>
+        <div style={{ fontSize: 13, color: "var(--color-text-tertiary)", padding: "18px 4px" }}>
           Analiz yapıldığında genel ortalaman, en güçlü ve gelişime açık dersin burada anlık olarak görünecek.
         </div>
       ) : (

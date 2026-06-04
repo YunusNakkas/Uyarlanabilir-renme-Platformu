@@ -23,6 +23,83 @@ body{
   --color-border-tertiary:rgba(0,0,0,0.12);
   --color-border-secondary:rgba(0,0,0,0.22);
   --color-border-success:#9fe1cb;
+  --ozet-bg:linear-gradient(135deg,#f6fbf9 0%,#eef6f2 100%);
+  --ozet-border:#d6ece2;
+  /* Ders/aksan başlık renkleri (açık) — karanlıkta html.dark altında override edilir */
+  --acc-green-bg:#E1F5EE;  --acc-green-fg:#0F6E56;  --acc-green-bd:#9FE1CB;
+  --acc-blue-bg:#E6F1FB;   --acc-blue-fg:#185FA5;   --acc-blue-bd:#AACDF3;
+  --acc-red-bg:#FCEBEB;    --acc-red-fg:#A32D2D;    --acc-red-bd:#F7C1C1;
+  --acc-orange-bg:#FAECE7; --acc-orange-fg:#993C1D;
+  --acc-amber-bg:#FAEEDA;  --acc-amber-fg:#854F0B;  --acc-amber-bd:#FAC775;
+  --acc-purple-bg:#F3E8FF; --acc-purple-fg:#6D28D9; --acc-purple-bd:#D8B4FE;
+  --acc-gold-bg:#FEF3C7;   --acc-gold-fg:#B45309;   --acc-gold-bd:#FDE68A;
+}
+
+/* ── KARANLIK MOD ────────────────────────────────────
+   Değişkenleri override eder; inline stiller var(--...) kullandığı için
+   onlar da otomatik döner. Sınıf-tabanlı yüzeyler aşağıda tek tek geçilir. */
+html.dark{
+  /* Menekşe-tint koyu yüzeyler (modern, soğuk ton) */
+  --color-background-primary:#211e2b;
+  --color-background-secondary:#16131f;
+  --color-background-success:#15302a;
+  --color-text-primary:#eae8f2;
+  --color-text-secondary:#b6b1c6;
+  --color-text-tertiary:#8d889c;
+  --color-text-success:#5fd3aa;
+  --color-border-tertiary:rgba(167,139,250,0.14);
+  --color-border-secondary:rgba(167,139,250,0.26);
+  --color-border-success:#2c5e4d;
+  --ozet-bg:linear-gradient(135deg,#16241f 0%,#13201b 100%);
+  --ozet-border:#244a3c;
+  /* Karanlık: pastel zemin yerine koyu tint + açık aksan yazı */
+  --acc-green-bg:rgba(29,158,117,0.15);  --acc-green-fg:#5fd3aa;  --acc-green-bd:rgba(29,158,117,0.35);
+  --acc-blue-bg:rgba(55,138,221,0.16);   --acc-blue-fg:#82bbef;   --acc-blue-bd:rgba(55,138,221,0.35);
+  --acc-red-bg:rgba(226,75,74,0.16);     --acc-red-fg:#f08e8d;    --acc-red-bd:rgba(226,75,74,0.35);
+  --acc-orange-bg:rgba(216,90,48,0.16);  --acc-orange-fg:#eb9b7f;
+  --acc-amber-bg:rgba(186,117,23,0.20);  --acc-amber-fg:#e0b367;  --acc-amber-bd:rgba(186,117,23,0.42);
+  --acc-purple-bg:rgba(139,92,246,0.18); --acc-purple-fg:#bca6f7; --acc-purple-bd:rgba(139,92,246,0.40);
+  --acc-gold-bg:rgba(245,158,11,0.16);   --acc-gold-fg:#e9b65f;   --acc-gold-bd:rgba(245,158,11,0.40);
+  color-scheme:dark;
+}
+html.dark body{background:var(--color-background-secondary);}
+html.dark .shell{background:var(--color-background-primary);}
+html.dark .sidebar{background:var(--color-background-secondary);border-right-color:var(--color-border-tertiary);}
+html.dark .logo{color:var(--color-text-primary);border-bottom-color:var(--color-border-tertiary);}
+html.dark .nlabel{color:var(--color-text-tertiary);}
+html.dark .nitem{color:var(--color-text-secondary);}
+html.dark .nitem.active{background:var(--color-background-primary);color:var(--color-text-primary);border-color:var(--color-border-tertiary);}
+html.dark .sfooter{border-top-color:var(--color-border-tertiary);}
+html.dark .tbar{border-bottom-color:var(--color-border-tertiary);}
+html.dark .lpanel{border-right-color:var(--color-border-tertiary);}
+html.dark .slabel,html.dark .sc-lbl,html.dark .sc-sub{color:var(--color-text-tertiary);}
+html.dark .tab{color:var(--color-text-secondary);border-color:var(--color-border-tertiary);}
+html.dark .glabel{color:var(--color-text-secondary);}
+html.dark .gcard{border-color:var(--color-border-tertiary);}
+html.dark .gchead{border-bottom-color:var(--color-border-tertiary);}
+html.dark .grow{border-bottom-color:var(--color-border-tertiary);}
+html.dark .ginput{background:var(--color-background-primary);color:var(--color-text-primary);border-color:var(--color-border-secondary);}
+html.dark .rpanel{background:radial-gradient(130% 90% at 100% 0%, rgba(139,92,246,0.10), transparent 55%), var(--color-background-secondary);}
+html.dark .scard{background:var(--color-background-primary);border-color:var(--color-border-tertiary);}
+html.dark .sc-val{color:var(--color-text-primary);}
+html.dark .pbar,html.dark .dbar-bg{background:rgba(255,255,255,0.08);}
+html.dark .acard,html.dark .dcard{background:var(--color-background-primary);border-color:var(--color-border-tertiary);}
+html.dark .ahead{border-bottom-color:var(--color-border-tertiary);}
+html.dark .atext{color:#cdd0d4;}
+html.dark .drow{border-bottom-color:var(--color-border-tertiary);}
+html.dark .dname{color:var(--color-text-primary);}
+html.dark .modal-box{background:var(--color-background-primary);}
+html.dark .modal-header{background:#241f31;border-bottom-color:var(--color-border-tertiary);}
+html.dark .modal-close-btn{color:var(--color-text-tertiary);}
+html.dark .modal-close-btn:hover{color:var(--color-text-primary);}
+html.dark input,html.dark textarea,html.dark select{background:var(--color-background-primary);color:var(--color-text-primary);border-color:var(--color-border-secondary);}
+html.dark input::placeholder,html.dark textarea::placeholder{color:var(--color-text-tertiary);}
+html.dark ::-webkit-scrollbar-thumb{background:rgba(167,139,250,0.28);}
+html.dark ::-webkit-scrollbar-thumb:hover{background:rgba(167,139,250,0.45);}
+
+/* Tema geçişini yumuşat */
+body,.shell,.sidebar,.rpanel,.scard,.acard,.dcard,.gcard,.modal-box,.modal-header,.ginput,input,textarea{
+  transition:background-color .25s ease, border-color .25s ease, color .25s ease;
 }
 
 /* ANA ÇERÇEVE (TAM EKRAN) */

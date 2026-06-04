@@ -149,15 +149,15 @@
         if (!gap) { el.style.display = 'none'; return; }
         // Duruma göre renk (risk: turuncu, potansiyel: mavi, düşük: kırmızı, tutarlı: yeşil)
         const palette = {
-            '⚠️': { bg: '#FEF3E2', border: '#F2C68A', text: '#9A5B1E', fill: '#E8923C' },
-            '💡': { bg: '#E6F1FB', border: '#AACDF3', text: '#185FA5', fill: '#378ADD' },
-            '🔴': { bg: '#FDECEC', border: '#F3B5B5', text: '#B23636', fill: '#D94F4F' },
-            '✅': { bg: '#E1F5EE', border: '#9FE1CB', text: '#0F6E56', fill: '#1D9E75' },
+            '⚠️': { bg: 'var(--acc-gold-bg)',   border: 'var(--acc-gold-bd)',   text: 'var(--acc-gold-fg)',   fill: '#E8923C' },
+            '💡': { bg: 'var(--acc-blue-bg)',   border: 'var(--acc-blue-bd)',   text: 'var(--acc-blue-fg)',   fill: '#378ADD' },
+            '🔴': { bg: 'var(--acc-red-bg)',    border: 'var(--acc-red-bd)',    text: 'var(--acc-red-fg)',    fill: '#D94F4F' },
+            '✅': { bg: 'var(--acc-green-bg)',  border: 'var(--acc-green-bd)',  text: 'var(--acc-green-fg)',  fill: '#1D9E75' },
         };
         const c = palette[gap.icon] || palette['✅'];
         const pill = (label, val) =>
-            `<span style="font-size:11px;color:#666;">${label}</span> ` +
-            `<span style="font-size:12px;font-weight:700;color:${c.text};background:#fff;border:1px solid ${c.border};border-radius:6px;padding:2px 8px;">${val}</span>`;
+            `<span style="font-size:11px;color:var(--color-text-tertiary);">${label}</span> ` +
+            `<span style="font-size:12px;font-weight:700;color:${c.text};background:var(--color-background-primary);border:1px solid ${c.border};border-radius:6px;padding:2px 8px;">${val}</span>`;
 
         el.style.display = 'block';
         el.innerHTML = `
@@ -171,8 +171,8 @@
                 <span style="color:${c.text};font-weight:700;">→</span>
                 ${pill('Alışkanlıkların', gap.habit_tier_name)}
               </div>
-              <div style="font-size:12.5px;line-height:1.65;color:#3a3a38;margin-bottom:10px;">${gap.message}</div>
-              <div style="display:flex;align-items:flex-start;gap:7px;background:#fff;border:1px dashed ${c.border};border-radius:8px;padding:9px 11px;font-size:12px;line-height:1.55;color:#1a1a18;">
+              <div style="font-size:12.5px;line-height:1.65;color:var(--color-text-primary);margin-bottom:10px;">${gap.message}</div>
+              <div style="display:flex;align-items:flex-start;gap:7px;background:var(--color-background-primary);border:1px dashed ${c.border};border-radius:8px;padding:9px 11px;font-size:12px;line-height:1.55;color:var(--color-text-primary);">
                 <span style="flex-shrink:0;">🎯</span>
                 <span><b>Sonraki adım:</b> ${gap.next_step}</span>
               </div>
@@ -185,7 +185,7 @@
             modalTitle.innerText = "İlerleme Raporu";
             modalTitle.style.color = '#185FA5';
             modalDot.style.backgroundColor = '#378ADD';
-            modalBody.innerHTML = `<div style="text-align:center;padding:30px;color:#888780;">Yükleniyor...</div>`;
+            modalBody.innerHTML = `<div style="text-align:center;padding:30px;color:var(--color-text-tertiary);">Yükleniyor...</div>`;
             modal.classList.add('show');
 
             try {
@@ -196,7 +196,7 @@
 
                 if (!analyses.length) {
                     modalBody.innerHTML = `
-                        <div style="text-align:center;padding:40px 20px;color:#888780;">
+                        <div style="text-align:center;padding:40px 20px;color:var(--color-text-tertiary);">
                             <div style="font-size:32px;margin-bottom:12px;">📊</div>
                             <div style="font-size:14px;">Henüz analiz yapılmamış.<br>İlk analizini yaptıktan sonra burada görünecek.</div>
                         </div>`;
@@ -218,39 +218,39 @@
 
                 modalBody.innerHTML = `
                     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;">
-                        <div style="background:#f5f5f3;border-radius:10px;padding:12px;text-align:center;">
-                            <div style="font-size:11px;color:#888780;margin-bottom:4px;">Genel Ortalama</div>
+                        <div style="background:var(--color-background-secondary);border-radius:10px;padding:12px;text-align:center;">
+                            <div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:4px;">Genel Ortalama</div>
                             <div style="font-size:24px;font-weight:700;color:#1D9E75;">${last.genel}</div>
-                            <div style="font-size:10px;color:#888780;">Son analiz</div>
+                            <div style="font-size:10px;color:var(--color-text-tertiary);">Son analiz</div>
                         </div>
-                        <div style="background:#f5f5f3;border-radius:10px;padding:12px;text-align:center;">
-                            <div style="font-size:11px;color:#888780;margin-bottom:4px;">En Güçlü</div>
+                        <div style="background:var(--color-background-secondary);border-radius:10px;padding:12px;text-align:center;">
+                            <div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:4px;">En Güçlü</div>
                             <div style="font-size:18px;font-weight:700;color:#0F6E56;">${guclu.isim}</div>
-                            <div style="font-size:10px;color:#888780;">Ort. ${guclu.deger}/100</div>
+                            <div style="font-size:10px;color:var(--color-text-tertiary);">Ort. ${guclu.deger}/100</div>
                         </div>
-                        <div style="background:#f5f5f3;border-radius:10px;padding:12px;text-align:center;">
-                            <div style="font-size:11px;color:#888780;margin-bottom:4px;">Gelişmeli</div>
+                        <div style="background:var(--color-background-secondary);border-radius:10px;padding:12px;text-align:center;">
+                            <div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:4px;">Gelişmeli</div>
                             <div style="font-size:18px;font-weight:700;color:#185FA5;">${zayif.isim}</div>
-                            <div style="font-size:10px;color:#888780;">Ort. ${zayif.deger}/100</div>
+                            <div style="font-size:10px;color:var(--color-text-tertiary);">Ort. ${zayif.deger}/100</div>
                         </div>
                     </div>
 
-                    <div style="background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:16px;margin-bottom:12px;">
-                        <div style="font-size:13px;font-weight:600;color:#1a1a18;margin-bottom:14px;">Son Analiz Performansı
-                            <span style="font-size:11px;font-weight:400;color:#888780;margin-left:6px;">${last.tarih}</span>
+                    <div style="background:var(--color-background-primary);border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:16px;margin-bottom:12px;">
+                        <div style="font-size:13px;font-weight:600;color:var(--color-text-primary);margin-bottom:14px;">Son Analiz Performansı
+                            <span style="font-size:11px;font-weight:400;color:var(--color-text-tertiary);margin-left:6px;">${last.tarih}</span>
                         </div>
                         ${dersler.map(d => `
                         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-                            <div style="font-size:12px;color:#5f5e5a;min-width:68px;">${d.isim}</div>
+                            <div style="font-size:12px;color:var(--color-text-secondary);min-width:68px;">${d.isim}</div>
                             <div style="flex:1;background:#f0f0ee;border-radius:20px;height:7px;">
                                 <div style="width:${d.deger}%;background:${d.renk};height:7px;border-radius:20px;transition:width 0.5s;"></div>
                             </div>
                             <div style="font-size:12px;font-weight:600;color:${d.renk};min-width:28px;text-align:right;">${d.deger}</div>
                         </div>`).join('')}
                         ${trend !== null ? `
-                        <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,0.06);font-size:12px;color:#5f5e5a;">
+                        <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,0.06);font-size:12px;color:var(--color-text-secondary);">
                             İlk analizden bu yana: <span style="color:${trendColor};font-weight:700;">${trend >= 0 ? '+' : ''}${trend} puan</span>
-                            <span style="color:#888780;"> (${analyses.length} analiz)</span>
+                            <span style="color:var(--color-text-tertiary);"> (${analyses.length} analiz)</span>
                         </div>` : ''}
                     </div>
                 `;
@@ -547,16 +547,16 @@
                     </div>`;
             }).join("");
             return `
-                <div style="border:1px solid rgba(0,0,0,0.1);border-radius:10px;padding:14px;margin-bottom:14px;background:#fff;">
+                <div style="border:1px solid rgba(0,0,0,0.1);border-radius:10px;padding:14px;margin-bottom:14px;background:var(--color-background-primary);">
                     <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
                         <div style="width:28px;height:28px;border-radius:8px;background:#ede9fe;color:#6d28d9;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;">${h.hafta}</div>
                         <div style="flex:1;">
-                            <div style="font-size:14px;font-weight:600;color:#1a1a18;">Hafta ${h.hafta}</div>
-                            <div style="font-size:12px;color:#5f5e5a;">${h.odak || ""}</div>
+                            <div style="font-size:14px;font-weight:600;color:var(--color-text-primary);">Hafta ${h.hafta}</div>
+                            <div style="font-size:12px;color:var(--color-text-secondary);">${h.odak || ""}</div>
                         </div>
                     </div>
                     ${gorevlerHtml}
-                    ${h.motivasyon ? `<div style="margin-top:12px;padding:10px;background:#f5f5f3;border-radius:8px;font-size:12px;color:#5f5e5a;font-style:italic;">💡 ${h.motivasyon}</div>` : ""}
+                    ${h.motivasyon ? `<div style="margin-top:12px;padding:10px;background:var(--color-background-secondary);border-radius:8px;font-size:12px;color:var(--color-text-secondary);font-style:italic;">💡 ${h.motivasyon}</div>` : ""}
                 </div>`;
         }).join("");
 
@@ -566,7 +566,7 @@
         modalBody.innerHTML = `
             <div id="learningPathContent">
                 ${plan.ozet ? `<div style="padding:12px;background:#f3e8ff;border:1px solid #d8b4fe;border-radius:10px;margin-bottom:14px;font-size:13px;color:#6d28d9;line-height:1.5;">${plan.ozet}</div>` : ""}
-                ${plan.haftalikToplamSaat ? `<div style="font-size:12px;color:#5f5e5a;margin-bottom:14px;">Haftalık toplam çalışma: <b>${plan.haftalikToplamSaat} saat</b></div>` : ""}
+                ${plan.haftalikToplamSaat ? `<div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:14px;">Haftalık toplam çalışma: <b>${plan.haftalikToplamSaat} saat</b></div>` : ""}
                 ${haftalarHtml}
             </div>
             <button id="learningPathPdfBtn" style="margin-top:8px;width:100%;background:#6d28d9;color:#fff;border:none;border-radius:8px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;">📄 PDF İndir</button>
@@ -616,7 +616,7 @@
         modalTitle.innerText = "📊 Öğrenme Analitiği";
         modalTitle.style.color = "#E74C3C";
         modalDot.style.backgroundColor = "#E74C3C";
-        modalBody.innerHTML = `<div style="text-align:center;padding:20px;color:#888780;">Yükleniyor...</div>`;
+        modalBody.innerHTML = `<div style="text-align:center;padding:20px;color:var(--color-text-tertiary);">Yükleniyor...</div>`;
         modal.classList.add('show');
 
         try {
@@ -635,7 +635,7 @@
         window._lastAnalyses = analyses;
         if (!analyses || analyses.length === 0) {
             modalBody.innerHTML = `
-                <div style="text-align:center;padding:40px 20px;color:#888780;">
+                <div style="text-align:center;padding:40px 20px;color:var(--color-text-tertiary);">
                     <div style="font-size:32px;margin-bottom:12px;">📭</div>
                     <div style="font-size:14px;">Henüz analiz yapılmamış.<br>İlk analizini yaptıktan sonra burada görünecek.</div>
                 </div>`;
@@ -657,33 +657,33 @@
 
         modalBody.innerHTML = `
             <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
-                <div style="flex:1;min-width:100px;background:#f5f5f3;border-radius:10px;padding:12px;text-align:center;">
-                    <div style="font-size:11px;color:#888780;margin-bottom:4px;">Toplam Analiz</div>
-                    <div style="font-size:22px;font-weight:700;color:#1a1a18;">${analyses.length}</div>
+                <div style="flex:1;min-width:100px;background:var(--color-background-secondary);border-radius:10px;padding:12px;text-align:center;">
+                    <div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:4px;">Toplam Analiz</div>
+                    <div style="font-size:22px;font-weight:700;color:var(--color-text-primary);">${analyses.length}</div>
                 </div>
-                <div style="flex:1;min-width:100px;background:#f5f5f3;border-radius:10px;padding:12px;text-align:center;">
-                    <div style="font-size:11px;color:#888780;margin-bottom:4px;">Son Genel Ort.</div>
+                <div style="flex:1;min-width:100px;background:var(--color-background-secondary);border-radius:10px;padding:12px;text-align:center;">
+                    <div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:4px;">Son Genel Ort.</div>
                     <div style="font-size:22px;font-weight:700;color:#1D9E75;">${last.genel}</div>
                 </div>
                 ${trend !== null ? `
-                <div style="flex:1;min-width:100px;background:#f5f5f3;border-radius:10px;padding:12px;text-align:center;">
-                    <div style="font-size:11px;color:#888780;margin-bottom:4px;">İlerleme</div>
+                <div style="flex:1;min-width:100px;background:var(--color-background-secondary);border-radius:10px;padding:12px;text-align:center;">
+                    <div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:4px;">İlerleme</div>
                     <div style="font-size:22px;font-weight:700;">${trendHtml}</div>
                 </div>` : ''}
             </div>
-            <div style="background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:16px;margin-bottom:14px;">
-                <div style="font-size:13px;font-weight:600;color:#1a1a18;margin-bottom:12px;">Ders Ortalamaları Trendi</div>
+            <div style="background:var(--color-background-primary);border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:16px;margin-bottom:14px;">
+                <div style="font-size:13px;font-weight:600;color:var(--color-text-primary);margin-bottom:12px;">Ders Ortalamaları Trendi</div>
                 <canvas id="analyticsChart" height="200"></canvas>
             </div>
-            <div style="background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:16px;">
-                <div style="font-size:13px;font-weight:600;color:#1a1a18;margin-bottom:10px;">Geçmiş Analizler</div>
+            <div style="background:var(--color-background-primary);border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:16px;">
+                <div style="font-size:13px;font-weight:600;color:var(--color-text-primary);margin-bottom:10px;">Geçmiş Analizler</div>
                 ${analyses.slice().reverse().map(a => `
                     <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:12px;">
-                        <div style="color:#888780;min-width:110px;">${a.tarih}</div>
+                        <div style="color:var(--color-text-tertiary);min-width:110px;">${a.tarih}</div>
                         <div style="color:#1D9E75;min-width:40px;">Mat: ${a.mat}</div>
                         <div style="color:#378ADD;min-width:40px;">Fiz: ${a.fiz}</div>
                         <div style="color:#D85A30;min-width:40px;">Kim: ${a.kim}</div>
-                        <div style="color:#1a1a18;font-weight:600;">Ort: ${a.genel}</div>
+                        <div style="color:var(--color-text-primary);font-weight:600;">Ort: ${a.genel}</div>
                         <button onclick="showPastAdvice(${a.id})" style="margin-left:auto;background:${a.ai ? '#e1f5ee' : '#f5f5f3'};color:${a.ai ? '#0f6e56' : '#aaa'};border:1px solid ${a.ai ? '#9fe1cb' : '#e0e0e0'};border-radius:6px;padding:3px 10px;font-size:11px;font-weight:600;cursor:${a.ai ? 'pointer' : 'default'};">${a.ai ? 'Tavsiyeleri Gör' : 'Tavsiye yok'}</button>
                     </div>`).join('')}
             </div>
@@ -692,12 +692,17 @@
         if (_analyticsChart) { _analyticsChart.destroy(); _analyticsChart = null; }
         const ctx = document.getElementById('analyticsChart');
         if (ctx) {
+            // Chart.js canvas'a çizdiği için CSS değişkenlerini okuyamaz; temayı JS ile algıla.
+            const _dark = document.documentElement.classList.contains('dark');
+            const _txt  = _dark ? '#b3b2ad' : '#5f5e5a';
+            const _grid = _dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
+            const _genel = _dark ? '#e7e7e4' : '#1a1a18';
             _analyticsChart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels,
                     datasets: [
-                        { label: 'Genel', data: genelData, borderColor: '#1a1a18', backgroundColor: 'rgba(26,26,24,0.05)', tension: 0.3, pointRadius: 4 },
+                        { label: 'Genel', data: genelData, borderColor: _genel, backgroundColor: _dark ? 'rgba(231,231,228,0.06)' : 'rgba(26,26,24,0.05)', tension: 0.3, pointRadius: 4 },
                         { label: 'Matematik', data: matData, borderColor: '#1D9E75', backgroundColor: 'transparent', tension: 0.3, pointRadius: 3 },
                         { label: 'Fizik', data: fizData, borderColor: '#378ADD', backgroundColor: 'transparent', tension: 0.3, pointRadius: 3 },
                         { label: 'Kimya', data: kimData, borderColor: '#D85A30', backgroundColor: 'transparent', tension: 0.3, pointRadius: 3 },
@@ -705,10 +710,10 @@
                 },
                 options: {
                     responsive: true,
-                    plugins: { legend: { position: 'bottom', labels: { font: { size: 11 } } } },
+                    plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, color: _txt } } },
                     scales: {
-                        y: { min: 0, max: 100, ticks: { font: { size: 11 } } },
-                        x: { ticks: { font: { size: 10 }, maxRotation: 30 } }
+                        y: { min: 0, max: 100, ticks: { font: { size: 11 }, color: _txt }, grid: { color: _grid } },
+                        x: { ticks: { font: { size: 10 }, maxRotation: 30, color: _txt }, grid: { color: _grid } }
                     }
                 }
             });
@@ -720,22 +725,22 @@
         const ai = a.ai;
 
         const dersKonfig = [
-            { key: 'matematik', baslik: ai.matematikDurum, trend: ai.matematikTrend, tavsiyeler: ai.matematikTavsiyeler, renk: '#1D9E75', bg: '#E1F5EE', border: '#9FE1CB' },
-            { key: 'fizik',     baslik: ai.fizikDurum,     trend: ai.fizikTrend,     tavsiyeler: ai.fizikTavsiyeler,     renk: '#E24B4A', bg: '#FCEBEB', border: '#F7C1C1' },
-            { key: 'kimya',     baslik: ai.kimyaDurum,     trend: ai.kimyaTrend,     tavsiyeler: ai.kimyaTavsiyeler,     renk: '#BA7517', bg: '#FAEEDA', border: '#FAC775' },
+            { key: 'matematik', baslik: ai.matematikDurum, trend: ai.matematikTrend, tavsiyeler: ai.matematikTavsiyeler, renk: 'var(--acc-green-fg)', bg: 'var(--acc-green-bg)', border: 'var(--acc-green-bd)' },
+            { key: 'fizik',     baslik: ai.fizikDurum,     trend: ai.fizikTrend,     tavsiyeler: ai.fizikTavsiyeler,     renk: 'var(--acc-red-fg)',   bg: 'var(--acc-red-bg)',   border: 'var(--acc-red-bd)' },
+            { key: 'kimya',     baslik: ai.kimyaDurum,     trend: ai.kimyaTrend,     tavsiyeler: ai.kimyaTavsiyeler,     renk: 'var(--acc-amber-fg)', bg: 'var(--acc-amber-bg)', border: 'var(--acc-amber-bd)' },
         ];
 
         modalTitle.innerText = `Tavsiyeler — ${a.tarih}`;
-        modalTitle.style.color = '#1a1a18';
+        modalTitle.style.color = 'var(--color-text-primary)';
         modalDot.style.backgroundColor = '#1D9E75';
 
         modalBody.innerHTML = `
             <button onclick="renderAnalytics(window._lastAnalyses)" style="background:none;border:none;color:#1D9E75;font-size:12px;font-weight:600;cursor:pointer;padding:0 0 12px;display:flex;align-items:center;gap:4px;">← Analizlere Dön</button>
             <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
-                <div style="background:#f5f5f3;border-radius:8px;padding:10px 14px;font-size:12px;"><span style="color:#888780;">Mat:</span> <b style="color:#1D9E75;">${a.mat}</b></div>
-                <div style="background:#f5f5f3;border-radius:8px;padding:10px 14px;font-size:12px;"><span style="color:#888780;">Fiz:</span> <b style="color:#378ADD;">${a.fiz}</b></div>
-                <div style="background:#f5f5f3;border-radius:8px;padding:10px 14px;font-size:12px;"><span style="color:#888780;">Kim:</span> <b style="color:#D85A30;">${a.kim}</b></div>
-                <div style="background:#f5f5f3;border-radius:8px;padding:10px 14px;font-size:12px;"><span style="color:#888780;">Genel:</span> <b>${a.genel}</b></div>
+                <div style="background:var(--color-background-secondary);border-radius:8px;padding:10px 14px;font-size:12px;"><span style="color:var(--color-text-tertiary);">Mat:</span> <b style="color:#1D9E75;">${a.mat}</b></div>
+                <div style="background:var(--color-background-secondary);border-radius:8px;padding:10px 14px;font-size:12px;"><span style="color:var(--color-text-tertiary);">Fiz:</span> <b style="color:#378ADD;">${a.fiz}</b></div>
+                <div style="background:var(--color-background-secondary);border-radius:8px;padding:10px 14px;font-size:12px;"><span style="color:var(--color-text-tertiary);">Kim:</span> <b style="color:#D85A30;">${a.kim}</b></div>
+                <div style="background:var(--color-background-secondary);border-radius:8px;padding:10px 14px;font-size:12px;"><span style="color:var(--color-text-tertiary);">Genel:</span> <b>${a.genel}</b></div>
             </div>
             ${dersKonfig.map(d => `
             <div style="border:1px solid ${d.border};border-radius:10px;margin-bottom:12px;overflow:hidden;">
@@ -745,7 +750,7 @@
                 </div>
                 <div style="padding:10px 14px;">
                     ${(d.tavsiyeler || []).map(t => `
-                    <div style="display:flex;gap:8px;margin-bottom:8px;font-size:12px;line-height:1.5;color:#1a1a18;">
+                    <div style="display:flex;gap:8px;margin-bottom:8px;font-size:12px;line-height:1.5;color:var(--color-text-primary);">
                         <div style="width:6px;height:6px;border-radius:50%;background:${d.renk};flex-shrink:0;margin-top:5px;"></div>
                         <div>${t}</div>
                     </div>`).join('')}
@@ -788,6 +793,28 @@
     });
     document.getElementById('profileClose').addEventListener('click', closeProfile);
     document.getElementById('profileBackdrop').addEventListener('click', closeProfile);
+
+    // ── TEMA (Karanlık Mod) ───────────────────────────────
+    // <html>.dark sınıfı tüm temayı sürer; tercih localStorage'da saklanır.
+    const THEME_KEY = 'eduai_theme';
+    const themeIsDark = () => localStorage.getItem(THEME_KEY) === 'dark';
+    function applyTheme(dark) { document.documentElement.classList.toggle('dark', dark); }
+    function updateThemeUI() {
+        const dark = themeIsDark();
+        const lbl = document.getElementById('themeToggleLabel');
+        const st  = document.getElementById('themeToggleState');
+        if (lbl) lbl.innerText = dark ? '☀️ Aydınlık Mod' : '🌙 Karanlık Mod';
+        if (st)  st.innerText  = dark ? 'Açık' : 'Kapalı';
+    }
+    document.getElementById('themeToggleBtn')?.addEventListener('click', () => {
+        const next = !themeIsDark();
+        localStorage.setItem(THEME_KEY, next ? 'dark' : 'light');
+        applyTheme(next);
+        updateThemeUI();
+        // Not: Raporlar grafiği bir sonraki açılışında temaya göre yeniden çizilir.
+    });
+    applyTheme(themeIsDark());
+    updateThemeUI();
 
     document.getElementById('logoutBtnPanel').addEventListener('click', () => {
         clearToken();
@@ -919,10 +946,10 @@
                 <button id="goalEkleBtn" style="background:#F59E0B;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">+ Ekle</button>
             </div>
             <input id="goalAciklama" type="text" placeholder="Açıklama (isteğe bağlı)..." style="width:100%;border:1px solid rgba(0,0,0,0.18);border-radius:8px;padding:8px 12px;font-size:12px;outline:none;margin-bottom:16px;"/>
-            ${goals.length > 0 ? `<div style="font-size:12px;color:#888780;margin-bottom:10px;">${tamamlanan}/${goals.length} tamamlandı</div>` : ''}
+            ${goals.length > 0 ? `<div style="font-size:12px;color:var(--color-text-tertiary);margin-bottom:10px;">${tamamlanan}/${goals.length} tamamlandı</div>` : ''}
             <div id="goalsList">
                 ${goals.length === 0 ? `
-                    <div style="text-align:center;padding:30px;color:#888780;">
+                    <div style="text-align:center;padding:30px;color:var(--color-text-tertiary);">
                         <div style="font-size:28px;margin-bottom:8px;">🎯</div>
                         <div>Henüz hedef eklenmedi.</div>
                     </div>` :
@@ -932,8 +959,8 @@
                             style="margin-top:3px;width:16px;height:16px;cursor:pointer;accent-color:#F59E0B;"
                             onchange="toggleGoal(${g.id}, this.checked)"/>
                         <div style="flex:1;">
-                            <div style="font-size:13px;font-weight:500;color:#1a1a18;${g.tamamlandi ? 'text-decoration:line-through;color:#888780;' : ''}">${g.baslik}</div>
-                            ${g.aciklama ? `<div style="font-size:12px;color:#888780;margin-top:2px;">${g.aciklama}</div>` : ''}
+                            <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);${g.tamamlandi ? 'text-decoration:line-through;color:var(--color-text-tertiary);' : ''}">${g.baslik}</div>
+                            ${g.aciklama ? `<div style="font-size:12px;color:var(--color-text-tertiary);margin-top:2px;">${g.aciklama}</div>` : ''}
                             <div style="font-size:11px;color:#bbb;margin-top:2px;">${g.tarih}</div>
                         </div>
                         <button onclick="deleteGoal(${g.id})" style="background:none;border:none;color:#ccc;cursor:pointer;font-size:16px;padding:0 4px;" title="Sil">🗑</button>

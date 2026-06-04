@@ -5,10 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>EduAI - Yapay Zeka Koçu</title>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231D9E75'/><text x='16' y='23' text-anchor='middle' font-family='system-ui,sans-serif' font-size='18' font-weight='700' fill='white'>E</text></svg>"/>
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=6">
+<!-- Tema: boyamadan önce uygula (beyaz parlama olmasın) -->
+<script>try{if(localStorage.getItem('eduai_theme')==='dark')document.documentElement.classList.add('dark');}catch(e){}</script>
 </head >
 <body>
-<div id="loadingScreen" style="position:fixed;inset:0;background:#f5f5f3;display:flex;align-items:center;justify-content:center;z-index:9999;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#888780;font-size:14px;gap:10px;">
+<div id="loadingScreen" style="position:fixed;inset:0;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;z-index:9999;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--color-text-tertiary);font-size:14px;gap:10px;">
   <div style="width:18px;height:18px;border:2px solid #9fe1cb;border-top-color:#1D9E75;border-radius:50%;animation:spin .7s linear infinite;"></div>
   Yükleniyor...
 </div>
@@ -31,24 +33,24 @@
   <div class="sfooter" id="profileTrigger" style="cursor:pointer;" title="Profil">
     <div id="userAvatar" class="av">?</div>
     <div style="flex:1;min-width:0;">
-      <div id="userDisplayName" style="font-size:12px;font-weight:500;color:#1a1a18;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">--</div>
-      <div style="font-size:11px;color:#888780;">Profili Görüntüle</div>
+      <div id="userDisplayName" style="font-size:12px;font-weight:500;color:var(--color-text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">--</div>
+      <div style="font-size:11px;color:var(--color-text-tertiary);">Profili Görüntüle</div>
     </div>
-    <button id="logoutBtn" title="Çıkış Yap" style="background:none;border:none;cursor:pointer;color:#888780;font-size:16px;padding:4px;flex-shrink:0;">⏻</button>
+    <button id="logoutBtn" title="Çıkış Yap" style="background:none;border:none;cursor:pointer;color:var(--color-text-tertiary);font-size:16px;padding:4px;flex-shrink:0;">⏻</button>
   </div>
 </div>
 
 <div class="main">
   <div class="tbar">
-    <span style="font-size:15px;font-weight:600;color:#1a1a18;flex:1;">Sınav Notu Analizi & Tavsiye</span>
+    <span style="font-size:15px;font-weight:600;color:var(--color-text-primary);flex:1;">Sınav Notu Analizi & Tavsiye</span>
   </div>
 
   <div class="content">
     <div class="lpanel">
       <div id="ders-matematik" class="gcard">
-        <div class="gchead" style="background:#E1F5EE;">
+        <div class="gchead" style="background:var(--acc-green-bg);">
           <div class="ndot" style="background:#1D9E75;"></div>
-          <span style="color:#0F6E56;">Matematik</span>
+          <span style="color:var(--acc-green-fg);">Matematik</span>
         </div>
         <div class="grow"><span class="glabel">1. Sınav</span><input id="mat1" class="ginput" value="72" type="number"/><div class="gscore sm">72</div></div>
         <div class="grow"><span class="glabel">2. Sınav</span><input id="mat2" class="ginput" value="85" type="number"/><div class="gscore sh">85</div></div>
@@ -56,9 +58,9 @@
       </div>
 
       <div id="ders-fizik" class="gcard">
-        <div class="gchead" style="background:#E6F1FB;">
+        <div class="gchead" style="background:var(--acc-blue-bg);">
           <div class="ndot" style="background:#378ADD;"></div>
-          <span style="color:#185FA5;">Fizik</span>
+          <span style="color:var(--acc-blue-fg);">Fizik</span>
         </div>
         <div class="grow"><span class="glabel">1. Sınav</span><input id="fiz1" class="ginput" value="55" type="number"/><div class="gscore sl">55</div></div>
         <div class="grow"><span class="glabel">2. Sınav</span><input id="fiz2" class="ginput" value="61" type="number"/><div class="gscore sm">61</div></div>
@@ -66,9 +68,9 @@
       </div>
 
       <div id="ders-kimya" class="gcard">
-        <div class="gchead" style="background:#FAECE7;">
+        <div class="gchead" style="background:var(--acc-orange-bg);">
           <div class="ndot" style="background:#D85A30;"></div>
-          <span style="color:#993C1D;">Kimya</span>
+          <span style="color:var(--acc-orange-fg);">Kimya</span>
         </div>
         <div class="grow"><span class="glabel">1. Sınav</span><input id="kim1" class="ginput" value="78" type="number"/><div class="gscore sm">78</div></div>
         <div class="grow"><span class="glabel">2. Sınav</span><input id="kim2" class="ginput" value="82" type="number"/><div class="gscore sh">82</div></div>
@@ -76,17 +78,17 @@
       </div>
 
       <div id="ders-uyku" class="gcard">
-        <div class="gchead" style="background:#F3E8FF;">
+        <div class="gchead" style="background:var(--acc-purple-bg);">
           <div class="ndot" style="background:#8B5CF6;"></div>
-          <span style="color:#6D28D9;">Uyku</span>
+          <span style="color:var(--acc-purple-fg);">Uyku</span>
         </div>
         <div class="grow"><span class="glabel">Günlük Uyku (Saat)</span><input id="uyku-saati" class="ginput" value="7" type="number" min="0" max="24"/><div class="gscore sh">7</div></div>
       </div>
 
       <div id="ders-calisma" class="gcard">
-        <div class="gchead" style="background:#FEF3C7;">
+        <div class="gchead" style="background:var(--acc-gold-bg);">
           <div class="ndot" style="background:#F59E0B;"></div>
-          <span style="color:#B45309;">Ders Çalışma</span>
+          <span style="color:var(--acc-gold-fg);">Ders Çalışma</span>
         </div>
         <div class="grow"><span class="glabel">Günlük Çalışma (Saat)</span><input id="calisma-saati" class="ginput" value="3" type="number" min="0" max="24"/><div class="gscore sh">3</div></div>
       </div>
@@ -95,13 +97,13 @@
     </div>
 
     <div class="rpanel">
-      <div style="padding:14px 20px;border-bottom:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;gap:12px; flex-shrink:0; background:#fff;">
+      <div style="padding:14px 20px;border-bottom:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;gap:12px; flex-shrink:0; background:var(--color-background-primary);">
         <div style="width:30px;height:30px;border-radius:8px;background:#1D9E75;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
           <svg width="15" height="15" viewBox="0 0 16 16" fill="white"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zM6.5 6a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm-1 5.5c0-1.38 1.12-2.5 2.5-2.5s2.5 1.12 2.5 2.5h-5z"/></svg>
         </div>
         <div style="flex:1;">
-          <div style="font-size:14px;font-weight:600;color:#1a1a18;">Yapay Zeka Tavsiye Raporu</div>
-          <div style="font-size:12px;color:#888780;">Öğrenci durumuna göre gerçek zamanlı analiz</div>
+          <div style="font-size:14px;font-weight:600;color:var(--color-text-primary);">Yapay Zeka Tavsiye Raporu</div>
+          <div style="font-size:12px;color:var(--color-text-tertiary);">Öğrenci durumuna göre gerçek zamanlı analiz</div>
         </div>
         <button id="pathBtn" style="display:none; padding:8px 16px; background:#ede9fe; color:#6d28d9; border:1px solid #c4b5fd; border-radius:8px; font-weight:600; cursor:pointer; font-size:12px; transition:0.2s;">📚 Öğrenme Yolum</button>
         <button id="pdfBtn" style="display:none; padding:8px 16px; background:#e1f5ee; color:#0f6e56; border:1px solid #9fe1cb; border-radius:8px; font-weight:600; cursor:pointer; font-size:12px; transition:0.2s;">📄 PDF İndir</button>
@@ -117,43 +119,43 @@
         <div id="ui-gap-card" style="display:none;"></div>
 
         <div id="ui-ilerleme-dcard" class="dcard">
-          <div class="ahead" style="background:#f5f5f3;"><span style="color:#5f5e5a;">Ders Performans Çubukları</span></div>
+          <div class="ahead" style="background:var(--color-background-secondary);"><span style="color:var(--color-text-secondary);">Ders Performans Çubukları</span></div>
           <div class="drow">
             <div class="dname">Matematik</div>
             <div class="dbar-bg"><div id="ui-mat-bar" class="dbar-fill" style="width:0%;background:#1D9E75;"></div></div>
-            <div id="ui-mat-score" class="dscore" style="color:#0F6E56;">--</div>
-            <div id="ui-mat-trend" class="dtrend" style="color:#0F6E56;">--</div>
+            <div id="ui-mat-score" class="dscore" style="color:var(--acc-green-fg);">--</div>
+            <div id="ui-mat-trend" class="dtrend" style="color:var(--acc-green-fg);">--</div>
           </div>
           <div class="drow">
             <div class="dname">Kimya</div>
             <div class="dbar-bg"><div id="ui-kim-bar" class="dbar-fill" style="width:0%;background:#D85A30;"></div></div>
-            <div id="ui-kim-score" class="dscore" style="color:#993C1D;">--</div>
-            <div id="ui-kim-trend" class="dtrend" style="color:#993C1D;">--</div>
+            <div id="ui-kim-score" class="dscore" style="color:var(--acc-orange-fg);">--</div>
+            <div id="ui-kim-trend" class="dtrend" style="color:var(--acc-orange-fg);">--</div>
           </div>
           <div class="drow">
             <div class="dname">Fizik</div>
             <div class="dbar-bg"><div id="ui-fiz-bar" class="dbar-fill" style="width:0%;background:#378ADD;"></div></div>
-            <div id="ui-fiz-score" class="dscore" style="color:#185FA5;">--</div>
-            <div id="ui-fiz-trend" class="dtrend" style="color:#888780;">--</div>
+            <div id="ui-fiz-score" class="dscore" style="color:var(--acc-blue-fg);">--</div>
+            <div id="ui-fiz-trend" class="dtrend" style="color:var(--color-text-tertiary);">--</div>
           </div>
           <div class="drow">
             <div class="dname">Uyku</div>
             <div class="dbar-bg"><div id="ui-uyku-bar" class="dbar-fill" style="width:0%;background:#8B5CF6;"></div></div>
-            <div id="ui-uyku-score" class="dscore" style="color:#6D28D9;">--</div>
-            <div id="ui-uyku-trend" class="dtrend" style="color:#888780;">--</div>
+            <div id="ui-uyku-score" class="dscore" style="color:var(--acc-purple-fg);">--</div>
+            <div id="ui-uyku-trend" class="dtrend" style="color:var(--color-text-tertiary);">--</div>
           </div>
           <div class="drow">
             <div class="dname">Çalışma</div>
             <div class="dbar-bg"><div id="ui-calisma-bar" class="dbar-fill" style="width:0%;background:#F59E0B;"></div></div>
-            <div id="ui-calisma-score" class="dscore" style="color:#B45309;">--</div>
-            <div id="ui-calisma-trend" class="dtrend" style="color:#888780;">--</div>
+            <div id="ui-calisma-score" class="dscore" style="color:var(--acc-gold-fg);">--</div>
+            <div id="ui-calisma-trend" class="dtrend" style="color:var(--color-text-tertiary);">--</div>
           </div>
         </div>
 
         <div class="acard">
-          <div class="ahead" style="background:#E1F5EE;border-color:#9FE1CB;">
+          <div class="ahead" style="background:var(--acc-green-bg);border-color:var(--acc-green-bd);">
             <div class="ndot" style="background:#1D9E75;"></div>
-            <span id="ui-mat-baslik" style="color:#0F6E56;">Matematik — Bekleniyor...</span>
+            <span id="ui-mat-baslik" style="color:var(--acc-green-fg);">Matematik — Bekleniyor...</span>
           </div>
           <div id="ui-mat-tavsiyeler" class="abody">
             <div class="aitem"><div class="adot" style="background:#1D9E75;"></div><div class="atext">Sol menüden analiz butonuna basarak yapay zekayı başlatın.</div></div>
@@ -161,9 +163,9 @@
         </div>
 
         <div class="acard">
-          <div class="ahead" style="background:#FCEBEB;border-color:#F7C1C1;">
+          <div class="ahead" style="background:var(--acc-red-bg);border-color:var(--acc-red-bd);">
             <div class="ndot" style="background:#E24B4A;"></div>
-            <span id="ui-fiz-baslik" style="color:#A32D2D;">Fizik — Bekleniyor...</span>
+            <span id="ui-fiz-baslik" style="color:var(--acc-red-fg);">Fizik — Bekleniyor...</span>
           </div>
           <div id="ui-fiz-tavsiyeler" class="abody">
             <div class="aitem"><div class="adot" style="background:#E24B4A;"></div><div class="atext">Sol menüden analiz butonuna basarak yapay zekayı başlatın.</div></div>
@@ -171,9 +173,9 @@
         </div>
 
         <div class="acard">
-          <div class="ahead" style="background:#FAEEDA;border-color:#FAC775;">
+          <div class="ahead" style="background:var(--acc-amber-bg);border-color:var(--acc-amber-bd);">
             <div class="ndot" style="background:#BA7517;"></div>
-            <span id="ui-kim-baslik" style="color:#854F0B;">Kimya — Bekleniyor...</span>
+            <span id="ui-kim-baslik" style="color:var(--acc-amber-fg);">Kimya — Bekleniyor...</span>
           </div>
           <div id="ui-kim-tavsiyeler" class="abody">
             <div class="aitem"><div class="adot" style="background:#BA7517;"></div><div class="atext">Sol menüden analiz butonuna basarak yapay zekayı başlatın.</div></div>
@@ -181,9 +183,9 @@
         </div>
 
         <div class="acard">
-          <div class="ahead" style="background:#F3E8FF;border-color:#D8B4FE;">
+          <div class="ahead" style="background:var(--acc-purple-bg);border-color:var(--acc-purple-bd);">
             <div class="ndot" style="background:#8B5CF6;"></div>
-            <span id="ui-uyku-baslik" style="color:#6D28D9;">Uyku Düzeni — Bekleniyor...</span>
+            <span id="ui-uyku-baslik" style="color:var(--acc-purple-fg);">Uyku Düzeni — Bekleniyor...</span>
           </div>
           <div id="ui-uyku-tavsiyeler" class="abody">
             <div class="aitem"><div class="adot" style="background:#8B5CF6;"></div><div class="atext">Sol menüden analiz butonuna basarak yapay zekayı başlatın.</div></div>
@@ -191,9 +193,9 @@
         </div>
 
         <div class="acard">
-          <div class="ahead" style="background:#FEF3C7;border-color:#FDE68A;">
+          <div class="ahead" style="background:var(--acc-gold-bg);border-color:var(--acc-gold-bd);">
             <div class="ndot" style="background:#F59E0B;"></div>
-            <span id="ui-calisma-baslik" style="color:#B45309;">Ders Çalışma Saati — Bekleniyor...</span>
+            <span id="ui-calisma-baslik" style="color:var(--acc-gold-fg);">Ders Çalışma Saati — Bekleniyor...</span>
           </div>
           <div id="ui-calisma-tavsiyeler" class="abody">
             <div class="aitem"><div class="adot" style="background:#F59E0B;"></div><div class="atext">Sol menüden analiz butonuna basarak yapay zekayı başlatın.</div></div>
@@ -207,15 +209,15 @@
 
 <!-- Profil Sağdan Kayan Panel -->
 <div id="profileBackdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.3);backdrop-filter:blur(2px);z-index:2000;"></div>
-<div id="profilePanel" style="position:fixed;top:0;right:-420px;width:380px;max-width:95vw;height:100vh;background:#fff;z-index:2001;display:flex;flex-direction:column;box-shadow:-8px 0 40px rgba(0,0,0,0.12);transition:right 0.3s cubic-bezier(0.4,0,0.2,1);overflow:hidden;">
+<div id="profilePanel" style="position:fixed;top:0;right:-420px;width:380px;max-width:95vw;height:100vh;background:var(--color-background-primary);z-index:2001;display:flex;flex-direction:column;box-shadow:-8px 0 40px rgba(0,0,0,0.12);transition:right 0.3s cubic-bezier(0.4,0,0.2,1);overflow:hidden;">
   <!-- Panel Header -->
-  <div style="padding:20px;border-bottom:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;gap:14px;background:#f5f5f3;">
+  <div style="padding:20px;border-bottom:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;gap:14px;background:var(--color-background-secondary);">
     <div id="profilePanelAvatar" style="width:48px;height:48px;border-radius:50%;background:#AFA9EC;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:#3C3489;flex-shrink:0;"></div>
     <div style="flex:1;min-width:0;">
-      <div id="profilePanelEmail" style="font-size:14px;font-weight:600;color:#1a1a18;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></div>
-      <div style="font-size:12px;color:#888780;margin-top:2px;">Öğrenci</div>
+      <div id="profilePanelEmail" style="font-size:14px;font-weight:600;color:var(--color-text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></div>
+      <div style="font-size:12px;color:var(--color-text-tertiary);margin-top:2px;">Öğrenci</div>
     </div>
-    <button id="profileClose" style="background:none;border:none;font-size:22px;color:#888780;cursor:pointer;padding:4px;">✕</button>
+    <button id="profileClose" style="background:none;border:none;font-size:22px;color:var(--color-text-tertiary);cursor:pointer;padding:4px;">✕</button>
   </div>
 
   <!-- Panel Body -->
@@ -223,7 +225,7 @@
 
     <!-- Ad Soyad -->
     <div>
-      <div style="font-size:13px;font-weight:600;color:#1a1a18;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+      <div style="font-size:13px;font-weight:600;color:var(--color-text-primary);margin-bottom:12px;display:flex;align-items:center;gap:8px;">
         <span style="width:8px;height:8px;border-radius:2px;background:#1D9E75;display:inline-block;"></span>
         Bilgilerim
       </div>
@@ -237,7 +239,7 @@
 
     <!-- Hedeflerim -->
     <div style="border-top:1px solid rgba(0,0,0,0.08);padding-top:20px;">
-      <div style="font-size:13px;font-weight:600;color:#1a1a18;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+      <div style="font-size:13px;font-weight:600;color:var(--color-text-primary);margin-bottom:12px;display:flex;align-items:center;gap:8px;">
         <span style="width:8px;height:8px;border-radius:2px;background:#F59E0B;display:inline-block;"></span>
         Hedeflerim
       </div>
@@ -251,21 +253,33 @@
 
     <!-- Şifre Değiştir -->
     <div style="border-top:1px solid rgba(0,0,0,0.08);padding-top:20px;">
-      <div style="font-size:13px;font-weight:600;color:#1a1a18;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+      <div style="font-size:13px;font-weight:600;color:var(--color-text-primary);margin-bottom:12px;display:flex;align-items:center;gap:8px;">
         <span style="width:8px;height:8px;border-radius:2px;background:#8B5CF6;display:inline-block;"></span>
         Şifre Değiştir
       </div>
       <input id="pwdCurrent" type="password" placeholder="Mevcut şifre" style="width:100%;border:1px solid rgba(0,0,0,0.15);border-radius:8px;padding:8px 11px;font-size:13px;outline:none;margin-bottom:8px;"/>
       <input id="pwdNew" type="password" placeholder="Yeni şifre (en az 6 karakter)" style="width:100%;border:1px solid rgba(0,0,0,0.15);border-radius:8px;padding:8px 11px;font-size:13px;outline:none;margin-bottom:8px;"/>
-      <button id="pwdSendCodeBtn" style="width:100%;background:#fff;color:#6D28D9;border:1px solid #c4b5fd;border-radius:8px;padding:9px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:8px;">📧 E-postama doğrulama kodu gönder</button>
+      <button id="pwdSendCodeBtn" style="width:100%;background:var(--color-background-primary);color:var(--acc-purple-fg);border:1px solid #c4b5fd;border-radius:8px;padding:9px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:8px;">📧 E-postama doğrulama kodu gönder</button>
       <input id="pwdCode" type="text" inputmode="numeric" maxlength="6" placeholder="E-postana gelen 6 haneli kod" style="width:100%;border:1px solid rgba(0,0,0,0.15);border-radius:8px;padding:8px 11px;font-size:13px;outline:none;margin-bottom:8px;letter-spacing:3px;"/>
       <div id="pwdError" style="font-size:12px;color:#d94f4f;min-height:16px;margin-bottom:6px;"></div>
       <button id="pwdSaveBtn" style="width:100%;background:#8B5CF6;color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;">Şifreyi Güncelle</button>
     </div>
 
+    <!-- Görünüm / Tema -->
+    <div style="border-top:1px solid rgba(0,0,0,0.08);padding-top:20px;">
+      <div style="font-size:13px;font-weight:600;color:var(--color-text-primary);margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+        <span style="width:8px;height:8px;border-radius:2px;background:#378ADD;display:inline-block;"></span>
+        Görünüm
+      </div>
+      <button id="themeToggleBtn" style="width:100%;display:flex;align-items:center;justify-content:space-between;background:var(--color-background-secondary);color:var(--color-text-primary);border:1px solid var(--color-border-tertiary);border-radius:8px;padding:11px 14px;font-size:13px;font-weight:500;cursor:pointer;">
+        <span id="themeToggleLabel">🌙 Karanlık Mod</span>
+        <span id="themeToggleState" style="font-size:12px;color:var(--color-text-tertiary);">Kapalı</span>
+      </button>
+    </div>
+
     <!-- Çıkış -->
     <div style="border-top:1px solid rgba(0,0,0,0.08);padding-top:20px;">
-      <button id="logoutBtnPanel" style="width:100%;background:#fff;color:#d94f4f;border:1px solid #f7c1c1;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;">Çıkış Yap</button>
+      <button id="logoutBtnPanel" style="width:100%;background:var(--color-background-primary);color:#d94f4f;border:1px solid #f7c1c1;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;">Çıkış Yap</button>
       <button id="deleteAccountBtn" style="width:100%;background:#d94f4f;color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:10px;">Hesabımı Sil</button>
     </div>
 
@@ -294,7 +308,7 @@
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
-<script type="text/babel" src="js/react-island.jsx?v=1"></script>
-<script src="js/app.js?v=14"></script>
+<script type="text/babel" src="js/react-island.jsx?v=2"></script>
+<script src="js/app.js?v=16"></script>
 </body>
 </html>
