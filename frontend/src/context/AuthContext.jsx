@@ -1,3 +1,4 @@
+// Author: Fatma Türkmen - Global Kimlik Doğrulama Durum Yönetimi (Context)
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { authApi, userApi } from '../api/auth';
 
