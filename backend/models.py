@@ -1,3 +1,4 @@
+# Author: Fatma Türkmen - Veritabanı Modelleri ve İlişki Tanımları
 from sqlalchemy import (
     Column, Float, ForeignKey, Integer, String,
     DateTime, Boolean, Text, Enum
