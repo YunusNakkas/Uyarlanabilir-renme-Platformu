@@ -1,3 +1,4 @@
+// Author: Fatma Türkmen - API Kimlik Doğrulama ve Kullanıcı İstek Katmanı
 import axios from 'axios';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
