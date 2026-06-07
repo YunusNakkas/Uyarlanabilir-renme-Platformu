@@ -1,3 +1,4 @@
+// Author: Fatma Türkmen - Geliştirici Giriş Sayfası Bileşeni
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
