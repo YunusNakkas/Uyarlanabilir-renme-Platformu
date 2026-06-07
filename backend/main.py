@@ -12,16 +12,17 @@ import os
 from backend.database import get_db, engine, Base
 from backend import models
 
-# Tabloları oluştur
+# Veritabanı tablolarının otomatik oluşturulması
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Uyarlanabilir Öğrenme Platformu API",
-    description="Makine öğrenimi tabanlı kişiselleştirilmiş öğrenme platformu",
+    description="Makine öğrenimi tabanlı kişiselleştirilmiş öğrenme platformu backend API servisleri",
     version="1.0.0",
 )
 
-# CORS
+# CORS (Cross-Origin Resource Sharing) Yapılandırması
+# Frontend uygulamasının API isteklerini güvenli bir şekilde yapabilmesi için izinler tanınmıştır.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://localhost:3000"],
@@ -30,17 +31,19 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Güvenlik
+# Güvenlik ve JWT token yapılandırması
 SECRET_KEY = os.environ.get("SECRET_KEY", "gizli-anahtar-degistir")
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 24 saat
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # Token geçerlilik süresi: 24 saat
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
-# ─── Pydantic Şemaları ─────────────────────────────────────
+# ─── Pydantic Veri Doğrulama Şemaları ─────────────────────────────────────
+
 class UserCreate(BaseModel):
+    """Kullanıcı kayıt istek şeması."""
     ad: str
     soyad: str
     email: EmailStr
@@ -49,6 +52,7 @@ class UserCreate(BaseModel):
 
 
 class UserUpdate(BaseModel):
+    """Kullanıcı profil güncelleme şeması."""
     ad: Optional[str] = None
     soyad: Optional[str] = None
     email: Optional[EmailStr] = None
@@ -58,11 +62,13 @@ class UserUpdate(BaseModel):
 
 
 class PasswordChange(BaseModel):
+    """Şifre değiştirme şeması."""
     current_password: str
     new_password: str
 
 
 class UserOut(BaseModel):
+    """Dış dünyaya sunulacak güvenli kullanıcı veri şeması."""
     id: int
     ad: str
     soyad: str
@@ -80,24 +86,30 @@ class UserOut(BaseModel):
 
 
 class Token(BaseModel):
+    """JWT Token yanıt şeması."""
     access_token: str
     token_type: str
 
 
 class ForgotPasswordRequest(BaseModel):
+    """Şifre sıfırlama istek şeması."""
     email: EmailStr
 
 
 # ─── Yardımcı Fonksiyonlar ─────────────────────────────────
+
 def verify_password(plain: str, hashed: str) -> bool:
+    """Verilen düz şifre ile hash'lenmiş şifreyi karşılaştırır."""
     return pwd_context.verify(plain, hashed)
 
 
 def hash_password(password: str) -> str:
+    """Kullanıcı şifrelerini bcrypt ile güvenli bir şekilde hashler."""
     return pwd_context.hash(password)
 
 
 def create_access_token(data: dict, expires_delta: timedelta = None) -> str:
+    """Kullanıcı oturumu için JWT erişim token'ı üretir."""
     to_encode = data.copy()
     expire = datetime.utcnow() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
     to_encode["exp"] = expire
@@ -105,6 +117,10 @@ def create_access_token(data: dict, expires_delta: timedelta = None) -> str:
 
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)) -> models.User:
+    """
+    HTTP istek başlığındaki JWT token'ı doğrular ve 
+    mevcut giriş yapan kullanıcı nesnesini veritabanından getirir.
+    """
     credentials_exc = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Geçersiz kimlik bilgileri",
@@ -125,9 +141,12 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 
 
 # ─── Auth Endpoint'leri ────────────────────────────────────
+
 @app.post("/auth/register", response_model=UserOut, status_code=201, tags=["auth"])
 def register(payload: UserCreate, db: Session = Depends(get_db)):
-    """Yeni kullanıcı kaydı."""
+    """
+    Sisteme yeni bir kullanıcı (Öğrenci veya Öğretmen) kaydeder.
+    """
     if db.query(models.User).filter(models.User.email == payload.email).first():
         raise HTTPException(status_code=400, detail="Bu e-posta adresi zaten kayıtlı.")
     if len(payload.password) < 8:
@@ -148,7 +167,9 @@ def register(payload: UserCreate, db: Session = Depends(get_db)):
 
 @app.post("/auth/login", response_model=Token, tags=["auth"])
 def login(form: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    """E-posta + şifre ile giriş, JWT token döner."""
+    """
+    E-posta adresi ve şifre ile giriş yaparak kullanıcıya JWT Token döner.
+    """
     user = db.query(models.User).filter(models.User.email == form.username).first()
     if not user or not verify_password(form.password, user.password_hash):
         raise HTTPException(status_code=401, detail="E-posta veya şifre hatalı.")
@@ -161,16 +182,21 @@ def login(form: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get
 
 @app.post("/auth/forgot-password", tags=["auth"])
 def forgot_password(req: ForgotPasswordRequest, db: Session = Depends(get_db)):
-    """Şifre sıfırlama e-postası gönderir."""
-    # Gerçek projede e-posta gönderimi burada yapılır
-    # Güvenlik için kullanıcı bulunamasa da başarılı döner
+    """
+    Kayıtlı kullanıcılara şifre sıfırlama bağlantısı içeren e-posta simülasyonu yapar.
+    """
+    # Gerçek projede e-posta gönderimi burada entegre edilir.
+    # Güvenlik gereği, e-posta sistemde olmasa bile başarılı yanıt dönülür.
     return {"message": "Şifre sıfırlama bağlantısı e-posta adresinize gönderildi."}
 
 
-# ─── Kullanıcı / Profil Endpoint'leri ─────────────────────
+# ─── Kullanıcı / Profil Yönetim Endpoint'leri ─────────────────────
+
 @app.get("/users/me", response_model=UserOut, tags=["users"])
 def get_profile(current_user: models.User = Depends(get_current_user)):
-    """Giriş yapmış kullanıcının profil bilgilerini döner."""
+    """
+    Oturum açmış kullanıcının kendi profil bilgilerini çeker.
+    """
     return current_user
 
 
@@ -180,7 +206,9 @@ def update_profile(
     current_user: models.User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """Profil bilgilerini günceller."""
+    """
+    Oturum açmış kullanıcının profil detaylarını (ad, soyad, bio vb.) günceller.
+    """
     if payload.email and payload.email != current_user.email:
         existing = db.query(models.User).filter(models.User.email == payload.email).first()
         if existing:
@@ -200,7 +228,9 @@ def change_password(
     current_user: models.User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """Şifre değiştirme."""
+    """
+    Kullanıcının mevcut şifresini doğrulayarak yeni şifre tanımlamasını sağlar.
+    """
     if not verify_password(payload.current_password, current_user.password_hash):
         raise HTTPException(status_code=400, detail="Mevcut şifre hatalı.")
     if len(payload.new_password) < 8:
@@ -217,12 +247,14 @@ def upload_avatar(
     current_user: models.User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """Avatar yükleme (dosya adını kaydeder; production'da S3/CDN'e yüklenecek)."""
+    """
+    Kullanıcı profili için avatar resim dosyası yükler.
+    """
     allowed = {"image/jpeg", "image/png", "image/gif", "image/webp"}
     if avatar.content_type not in allowed:
         raise HTTPException(status_code=400, detail="Desteklenmeyen dosya türü.")
 
-    # Gerçek projede: dosyayı S3'e yükle, URL'i kaydet
+    # Dosya adı oluşturularak veritabanına kaydedilir
     current_user.avatar_url = f"/avatars/{current_user.id}_{avatar.filename}"
     db.commit()
     return {"avatar_url": current_user.avatar_url}
@@ -233,13 +265,17 @@ def delete_account(
     current_user: models.User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """Hesabı kalıcı olarak siler."""
+    """
+    Kullanıcının hesabını veritabanından kalıcı olarak siler.
+    """
     db.delete(current_user)
     db.commit()
     return {"message": "Hesabınız başarıyla silindi."}
 
 
-# ─── Sağlık Kontrolü ──────────────────────────────────────
+# ─── Sistem Sağlık Kontrolü ──────────────────────────────────────
+
 @app.get("/health", tags=["system"])
 def health_check():
+    """API servisinin çalışır durumda olduğunu doğrular."""
     return {"status": "ok", "service": "Uyarlanabilir Öğrenme Platformu API"}
