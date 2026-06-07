@@ -22,5 +22,21 @@ npm install
 pip install -r requirements.txt
 
 ## 4. Uygulamayı Başlatma
-1. Sunucuyu başlatın: `npm start`
+
+### Frontend (React Arayüzü)
+```bash
+cd frontend
+npm install
+npm run dev
+```
+Giriş için tarayıcınızdan `http://localhost:5173` adresini açabilirsiniz.
+
+### Backend (FastAPI Sunucusu)
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
+API servislerini kontrol etmek ve interaktif dökümantasyonu incelemek için `http://localhost:8000/docs` adresini ziyaret edebilirsiniz.
+
 2. ML servisini kontrol edin: `python backend/ml_service.py`
