@@ -1,5 +1,6 @@
 -- ============================================================
 -- Uyarlanabilir Öğrenme Platformu – Veritabanı Şeması
+-- Hazırlayan: Fatma Türkmen
 -- PostgreSQL / SQLite uyumlu
 -- ============================================================
 
