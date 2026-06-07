@@ -1,3 +1,4 @@
+// Author: Fatma Türkmen - Geliştirici Şifre Sıfırlama Sayfası Bileşeni
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { authApi } from '../api/auth';
