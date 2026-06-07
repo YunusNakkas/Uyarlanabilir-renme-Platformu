@@ -1,3 +1,4 @@
+// Author: Fatma Türkmen - Rota Güvenlik Koruması Bileşeni (Route Guard)
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
