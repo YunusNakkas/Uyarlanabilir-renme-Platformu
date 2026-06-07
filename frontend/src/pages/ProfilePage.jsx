@@ -1,3 +1,4 @@
+// Author: Fatma Türkmen - Geliştirici Profil Sayfası Bileşeni
 import { useState, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { userApi } from '../api/auth';
