@@ -1,4 +1,4 @@
-# İleri Düzey Kullanıcı Arayüzü Tasarımı Araştırma Raporu
+# İleri Düzey Kullanıcı Arayüzü Tasarımı Araştırma Raporu (Revize)
 
 **Hazırlayan:** Fatma Türkmen  
 **Tarih:** Haziran 2026  
